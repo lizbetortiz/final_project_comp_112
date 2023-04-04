@@ -12,7 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(readxl)
 
-dataset <- read_excel("~/Desktop/final_comp112/final_project_comp_112/final dataset.xlsx")
+#dataset <- read_excel("~/Desktop/final_comp112/final_project_comp_112/final dataset.xlsx")
+
+dataset <- read_excel("C:/Users/juanr/Desktop/COMP_STAT_112/final_project_comp_112/final dataset.xlsx")
 View(dataset)
 
 
