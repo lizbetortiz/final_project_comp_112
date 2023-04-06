@@ -7,15 +7,53 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(purrr)
+library(rvest)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+
+
+#data_set <- read_excel("~/Desktop/final_comp112/final_project_comp_112/final dataset.xlsx")
+
+data_set <- read_excel("C:/Users/juanr/Desktop/COMP_STAT_112/final_project_comp_112/final dataset.xlsx")
+View(dataset)
+
 ```
 
 ```{r}
-library(readxl)
+# Selecting chemicals that produced cancer on humans
 
-#dataset <- read_excel("~/Desktop/final_comp112/final_project_comp_112/final dataset.xlsx")
+data_set <- data_set %>% select(REPORTING_YEAR,
+                                AI_NAME, 
+                                AI_NUMBER,
+                                PARISH_OR_COUNTY_DESC,
+                                PRIMARY_NAICS_CODE,
+                                `1,3-Butadiene [lb]`,
+                                `Arsenic (and compounds) [lb]`,
+                                `Asbestos [lb]`,
+                                `Benzene [lb]`,
+                                `Benzidine [lb]`,
+                                `Beryllium (Table 51.1) [lb]`,
+                                `Cadmium (and compounds) [lb]`,
+                                `Chromium VI (and compounds) [lb]`,
+                                `Ethylene oxide [lb]`,
+                                `Formaldehyde [lb]`,
+                                `Nickel (and compounds) [lb]`,
+                                `Nickel (refinery dust) [lb]`,
+                                `Sulfuric acid [lb]`,
+                                `Trichloroethylene [lb]`,
+                                `Vinyl chloride [lb]`
+                                )
+```
 
-dataset <- read_excel("C:/Users/juanr/Desktop/COMP_STAT_112/final_project_comp_112/final dataset.xlsx")
-View(dataset)
+```{r}
+data_set <- data_set %>% 
+  arrange(AI_NAME)
+
+
 
 
 ```
