@@ -16,9 +16,7 @@ library(ggplot2)
 library(dplyr)
 
 
-#data_set <- read_excel("~/Desktop/final_comp112/final_project_comp_112/final dataset.xlsx")
-
-data_set <- read_excel("C:/Users/juanr/Desktop/COMP_STAT_112/final_project_comp_112/final dataset.xlsx")
+data_set <- read_excel("final dataset.xlsx") 
 View(dataset)
 
 ```
