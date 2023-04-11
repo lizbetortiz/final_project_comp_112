@@ -78,4 +78,44 @@ colSums(!(is.na(ascension)))
 ```{r}
 colSums(!(is.na(Calcasieu))) 
 ```
+```{r}
+levels(factor(ascension$AI_NAME))
 
+```
+```{r}
+levels(factor(Calcasieu$AI_NAME))
+Calcasieu %>%
+  filter(!(is.na(`Vinyl chloride [lb]`)),
+         !(is.na(`Trichloroethylene [lb]`)),
+         !(is.na(`1,3-Butadiene [lb]`)),
+         !(is.na(`Arsenic (and compounds) [lb]`)),
+         !(is.na(`Asbestos [lb]`)),
+         !(is.na(`Benzene [lb]`)),
+         !(is.na(`Beryllium (Table 51.1) [lb]`)),
+         !(is.na(`Cadmium (and compounds) [lb]`)),
+         !(is.na(`Chromium VI (and compounds) [lb]`)),
+         !(is.na(`Ethylene oxide [lb]`)),
+         !(is.na(`Formaldehyde [lb]`)),
+         !is.na(`Nickel (and compounds) [lb]`),
+         !(is.na(`Nickel (refinery dust) [lb]`)),
+         !(is.na(`Sulfuric acid [lb]`))
+         )
+
+#filter(Calcasieu, !(is.na(`Vinyl chloride [lb]`)))
+#filter(Calcasieu, !(is.na(`Trichloroethylene [lb]`)))
+#filter(Calcasieu, !(is.na(`1,3-Butadiene [lb]`)))
+
+#filter(Calcasieu, !(is.na(`Arsenic (and compounds) [lb]`)))
+#filter(Calcasieu, !(is.na(`Asbestos [lb]`)))
+
+#filter(Calcasieu, !(is.na(`Benzene [lb]`)))
+
+#filter(Calcasieu, !(is.na(`Beryllium (Table 51.1) [lb]`)))
+#filter(Calcasieu, !(is.na(`Cadmium (and compounds) [lb]`)))
+#filter(Calcasieu, !(is.na(`Chromium VI (and compounds) [lb]`)))
+#filter(Calcasieu, !(is.na(`Ethylene oxide [lb]`)))
+#filter(Calcasieu, !(is.na(`Formaldehyde [lb]`)))
+#filter(Calcasieu, !is.na(`Nickel (and compounds) [lb]`))
+#filter(Calcasieu, !(is.na(`Nickel (refinery dust) [lb]`)))
+#filter(Calcasieu, !(is.na(`Sulfuric acid [lb]`)))
+```
