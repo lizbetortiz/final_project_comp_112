@@ -64,8 +64,22 @@ calcasieu <- data_set %>%
 ```{r}
 #tells which data variables (air pollutants) have the most info for `ascension` and `calcasieu` tables
 colSums(!(is.na(ascension)))
+```
+
+
+```{r}
 colSums(!(is.na(calcasieu))) 
 ```
+
+
+James said that if we try to filter all the information (pollutants) at once, we might not get any  data from the table. This is because the filter function will only show rows where all the information is not missing based on what we input, and I think this we might not want this.
+
+That said, we have two options: 
+- find facilities/ business that have data for specific pollutants, such as the ones below; 
+- treat all the pollutants as a whole based on facility/business and compare their trends through the years showing the different pollutants they have contributed to (similar to this: https://grapherhelp.goldensoftware.com/Resources/image/example_multivariatebar_stacked.png) 
+
+Overall, James said we are doing good!
+
 
 ```{r}
 # Creating new tables based on individuals air pollutant for `ascension` county
