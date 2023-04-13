@@ -51,11 +51,11 @@ data_set <- data_set %>%
 
 ```{r}
 #making a graph to show how the number of factories change from time to time.
-abc <- data_set %>%
+factory_number <- data_set %>%
   group_by(AI_NAME) %>%
   group_by(REPORTING_YEAR) %>%
   summarise(n = n()) 
-abc %>%
+factory_number %>%
   ggplot(aes(x = REPORTING_YEAR, y = n)) +
   geom_line()
 ```
