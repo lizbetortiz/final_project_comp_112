@@ -50,6 +50,16 @@ data_set <- data_set %>%
 ```
 
 ```{r}
+#making a graph to show how the number of factories change from time to time.
+abc <- data_set %>%
+  group_by(AI_NAME) %>%
+  group_by(REPORTING_YEAR) %>%
+  summarise(n = n()) 
+abc %>%
+  ggplot(aes(x = REPORTING_YEAR, y = n)) +
+  geom_line()
+```
+```{r}
 # Creating `ascension` table and filter data based on `Ascension` county
 ascension <- data_set %>% 
   filter(PARISH_OR_COUNTY_DESC == "Ascension") %>% 
