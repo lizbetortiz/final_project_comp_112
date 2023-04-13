@@ -50,6 +50,27 @@ data_set <- data_set %>%
 ```
 
 ```{r}
+
+# Building graphs that reflect the number of facilities reporting each year
+calcasieu %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(total = n()) %>% 
+  ggplot(aes(x = REPORTING_YEAR, y = total)) +
+  geom_col() +
+  labs(title = "Calcasieu county")
+
+ascension %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(total = n()) %>% 
+  ggplot(aes(x = REPORTING_YEAR, y = total)) +
+  geom_col() +
+  labs(title = "Ascension county")
+```
+
+
+
+
+```{r}
 #making a graph to show how the number of factories change from time to time.
 factory_number <- data_set %>%
   group_by(AI_NAME) %>%
@@ -59,6 +80,8 @@ factory_number %>%
   ggplot(aes(x = REPORTING_YEAR, y = n)) +
   geom_line()
 ```
+
+
 ```{r}
 # Creating `ascension` table and filter data based on `Ascension` county
 ascension <- data_set %>% 
