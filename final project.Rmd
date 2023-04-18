@@ -16,69 +16,82 @@ library(ggplot2)
 library(dplyr)
 
 # Get data from local cvs file (data was downloaded from https://www.deq.louisiana.gov/page/eric-public-reports)
-data_set <- read_excel("final dataset.xlsx") 
-View(dataset)
-
+data_set_before_2015 <- read_excel("Annual_Certified_Emissions_before_2015.xlsx") 
+data_set_after_2015 <- read_excel("Annual_Certified_Emissions_after_2015.xlsx")
+#View(dataset)
 ```
 
 ```{r}
-# Selecting air pollutants that contribute to poor air quality and cancer on humans
-data_set <- data_set %>% select(REPORTING_YEAR,
-                                AI_NAME, 
-                                AI_NUMBER,
-                                PARISH_OR_COUNTY_DESC,
-                                PRIMARY_NAICS_CODE,
-                                `1,3-Butadiene [lb]`,
-                                `Arsenic (and compounds) [lb]`,
-                                `Asbestos [lb]`,
-                                `Benzene [lb]`,
-                                `Benzidine [lb]`,
-                                `Beryllium (Table 51.1) [lb]`,
-                                `Cadmium (and compounds) [lb]`,
-                                `Chromium VI (and compounds) [lb]`,
-                                `Ethylene oxide [lb]`,
-                                `Formaldehyde [lb]`,
-                                `Nickel (and compounds) [lb]`,
-                                `Nickel (refinery dust) [lb]`,
-                                `Sulfuric acid [lb]`,
-                                `Trichloroethylene [lb]`,
-                                `Vinyl chloride [lb]`
-                                )
-# Arrange data based on facility name (AI_Name)
-data_set <- data_set %>% 
+
+# Select pollutants/variables that contribute the most to cancer
+data_set_before_2015 <- data_set_before_2015 %>% 
+  select(REPORTING_YEAR,
+        AI_NAME, 
+        PARISH_OR_COUNTY_DESC,
+        `1,3-Butadiene`,
+        `Arsenic (and compounds)`,
+        `Asbestos`,
+        `Benzene`,
+        `Benzidine`,
+        `Beryllium (Table 51.1)`,
+        `Cadmium (and compounds)`,
+        `Chromium VI (and compounds)`,
+        `Ethylene oxide`,
+        `Formaldehyde`,
+        `Nickel (and compounds)`,
+        `Nickel (refinery dust)`,
+        `Sulfuric acid`,
+        `Trichloroethylene`,
+        `Vinyl chloride`
+        )
+
+# Select pollutants/variables that contribute the most to cancer
+data_set_after_2015 <- data_set_after_2015 %>% 
+  select(REPORTING_YEAR,
+        AI_NAME, 
+        PARISH_OR_COUNTY_DESC,
+        `1,3-Butadiene`,
+        `Arsenic (and compounds)`,
+        `Asbestos`,
+        `Benzene`,
+        `Benzidine`,
+        `Beryllium (Table 51.1)`,
+        `Cadmium (and compounds)`,
+        `Chromium VI (and compounds)`,
+        `Ethylene oxide`,
+        `Formaldehyde`,
+        `Nickel (and compounds)`,
+        `Nickel (refinery dust)`,
+        `Sulfuric acid`,
+        `Trichloroethylene`,
+        `Vinyl chloride`
+        )
+```
+
+
+```{r}
+# Join both tables to have a single data set
+data_set <- data_set_before_2015 %>% 
+  full_join(data_set_after_2015, 
+            by = join_by(REPORTING_YEAR,
+                        AI_NAME, 
+                        PARISH_OR_COUNTY_DESC,
+                        `1,3-Butadiene`,
+                        `Arsenic (and compounds)`,
+                        `Asbestos`,
+                        `Benzene`,
+                        `Benzidine`,
+                        `Beryllium (Table 51.1)`,
+                        `Cadmium (and compounds)`,
+                        `Chromium VI (and compounds)`,
+                        `Ethylene oxide`,
+                        `Formaldehyde`,
+                        `Nickel (and compounds)`,
+                        `Nickel (refinery dust)`,
+                        `Sulfuric acid`,
+                        `Trichloroethylene`,
+                        `Vinyl chloride`)) %>% 
   arrange(AI_NAME)
-```
-
-```{r}
-
-# Building graphs that reflect the number of facilities reporting each year
-calcasieu %>% 
-  group_by(REPORTING_YEAR) %>% 
-  summarise(total = n()) %>% 
-  ggplot(aes(x = REPORTING_YEAR, y = total)) +
-  geom_col() +
-  labs(title = "Calcasieu county")
-
-ascension %>% 
-  group_by(REPORTING_YEAR) %>% 
-  summarise(total = n()) %>% 
-  ggplot(aes(x = REPORTING_YEAR, y = total)) +
-  geom_col() +
-  labs(title = "Ascension county")
-```
-
-
-
-
-```{r}
-#making a graph to show how the number of factories change from time to time.
-factory_number <- data_set %>%
-  group_by(AI_NAME) %>%
-  group_by(REPORTING_YEAR) %>%
-  summarise(n = n()) 
-factory_number %>%
-  ggplot(aes(x = REPORTING_YEAR, y = n)) +
-  geom_line()
 ```
 
 
@@ -95,105 +108,142 @@ calcasieu <- data_set %>%
 ```
 
 ```{r}
-#tells which data variables (air pollutants) have the most info for `ascension` and `calcasieu` tables
-colSums(!(is.na(ascension)))
+# Selecting facilities that contributed to the production of at least one pollutant
+ascension2 <- ascension %>% filter(rowSums(is.na(ascension)) != ncol(ascension) - 3)
+calcasieu2 <- calcasieu %>% filter(rowSums(is.na(calcasieu)) != ncol(calcasieu) - 3)
+
+
+```
+
+```{r}
+ascension_facilities <- ascension %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(total = n()) 
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+# Creating a new table that holds the total number of facilities in each county and the total number of facilities that contributed to any of the selected pollutants
+
+facilities_by_county <- tibble(county = c("Ascension", 
+                                          "Calcasieu"),
+                               total_facilities = c(nrow(ascension %>% 
+                                                           group_by(AI_NAME, 
+                                                                    REPORTING_YEAR) %>% 
+                                                           summarise(total = n())), 
+                                                    nrow(calcasieu %>%
+                                                           group_by(AI_NAME, 
+                                                                    REPORTING_YEAR) %>% 
+                                                           summarise(total = n()))),
+                               pollutant_facilities = c(nrow(ascension2 %>% 
+                                                           group_by(AI_NAME, 
+                                                                    REPORTING_YEAR) %>% 
+                                                           summarise(total = n())), 
+                                                        nrow(calcasieu2 %>%
+                                                               group_by(AI_NAME, 
+                                                                        REPORTING_YEAR) %>% 
+                                                               summarise(total = n()))))
 ```
 
 
 ```{r}
-colSums(!(is.na(calcasieu))) 
+facilities_by_county2 <- facilities_by_county %>% 
+  pivot_longer(cols=2:3, 
+               names_to = "names", 
+               values_to = "count")
+
+
+ggplot(facilities_by_county2, aes(x = factor(county), 
+                                  y = count,  
+                                  fill = names, 
+                                  colour = names)) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Total number of facilities by county & pollutant facilities",
+       y = "County",
+       x = "Total") +
+  theme_bw()
+
 ```
 
 
-James said that if we try to filter all the information (pollutants) at once, we might not get any  data from the table. This is because the filter function will only show rows where all the information is not missing based on what we input, and I think this we might not want this.
 
-That said, we have two options: 
-- find facilities/ business that have data for specific pollutants, such as the ones below; 
-- treat all the pollutants as a whole based on facility/business and compare their trends through the years showing the different pollutants they have contributed to (similar to this: https://grapherhelp.goldensoftware.com/Resources/image/example_multivariatebar_stacked.png) 
 
-Overall, James said we are doing good!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```{r}
-# Creating new tables based on individuals air pollutant for `ascension` county
-ascension_sulfur <- ascension %>% 
-  filter(!(is.na(`Sulfuric acid [lb]`)))
+testing_ascension <- ascension %>% 
+  anti_join(ascension2, 
+            by = join_by(REPORTING_YEAR,
+                        AI_NAME, 
+                        PARISH_OR_COUNTY_DESC,
+                        `1,3-Butadiene`,
+                        `Arsenic (and compounds)`,
+                        `Asbestos`,
+                        `Benzene`,
+                        `Benzidine`,
+                        `Beryllium (Table 51.1)`,
+                        `Cadmium (and compounds)`,
+                        `Chromium VI (and compounds)`,
+                        `Ethylene oxide`,
+                        `Formaldehyde`,
+                        `Nickel (and compounds)`,
+                        `Nickel (refinery dust)`,
+                        `Sulfuric acid`,
+                        `Trichloroethylene`,
+                        `Vinyl chloride`)) %>% 
+  arrange(AI_NAME)
 
-ascension_formal <- ascension %>% 
-filter(!(is.na(`Formaldehyde [lb]`)))
- 
-ascension_benzene <- ascension %>% 
-filter(!(is.na(`Benzene [lb]`)))
- 
+testing_calcasieu <- calcasieu %>% 
+  anti_join(calcasieu2, 
+            by = join_by(REPORTING_YEAR,
+                        AI_NAME, 
+                        PARISH_OR_COUNTY_DESC,
+                        `1,3-Butadiene`,
+                        `Arsenic (and compounds)`,
+                        `Asbestos`,
+                        `Benzene`,
+                        `Benzidine`,
+                        `Beryllium (Table 51.1)`,
+                        `Cadmium (and compounds)`,
+                        `Chromium VI (and compounds)`,
+                        `Ethylene oxide`,
+                        `Formaldehyde`,
+                        `Nickel (and compounds)`,
+                        `Nickel (refinery dust)`,
+                        `Sulfuric acid`,
+                        `Trichloroethylene`,
+                        `Vinyl chloride`)) %>% 
+  arrange(AI_NAME)
 ```
 
-```{r}
-# Creating new tables based on individuals air pollutant for `calcasieu` county
-calcasieu_sulfur <- calcasieu %>% 
-  filter(!(is.na(`Sulfuric acid [lb]`)))
-
-calcasieu_formal <- calcasieu %>% 
-filter(!(is.na(`Formaldehyde [lb]`)))
- 
-calcasieu_benzene <- calcasieu %>% 
-filter(!(is.na(`Benzene [lb]`)))
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{Random Code that might be useful}
-#data
-
-#a <- data_set[c(273:284, 476:483, 669:676, 1450:1457, 1693:1706, 1711:1724, 2018:2029, 2323:2361, 2387:2392, 2679:2687, 2764:2771, 2786:2793, 2872:2877, 3671:3682, 3812:3816, 3919:3943, 4067:4074, 4264:4271, 4383:4392, 4436:4440, 5445:5452, 5740:5742, 5834:5835, 6057:6066, 6129:6133, 6204:6225, 6293:6317, 6493:6510, 6934:6943, 7143:7147, 7304:7313, 7435:7438, 7569:7574, 7683:7685, 7747:7756, 7768:7782, 7791:7842, 7993:8016, 8099:8108, 8477:8494, 8557:8572, 8602:8613, 8728:8730, 8806:8910, 9039:9050, 9662:9674, 10139:10159, 10563:10571, 11553:11576, 14614:14633, 15496:15505, 15528:15537, 15610:15619, 16738:16744),]
-
-
-#levels(factor(Calcasieu$AI_NAME))
-#Calcasieu %>%
-#  filter(!(is.na(`Vinyl chloride [lb]`)),
-#         !(is.na(`Trichloroethylene [lb]`)),
-#         !(is.na(`1,3-Butadiene [lb]`)),
-#         !(is.na(`Arsenic (and compounds) [lb]`)),
-#         !(is.na(`Asbestos [lb]`)),
-#         !(is.na(`Benzene [lb]`)),
-#         !(is.na(`Beryllium (Table 51.1) [lb]`)),
-#         !(is.na(`Cadmium (and compounds) [lb]`)),
-#         !(is.na(`Chromium VI (and compounds) [lb]`)),
-#         !(is.na(`Ethylene oxide [lb]`)),
-#         !(is.na(`Formaldehyde [lb]`)),
-#         !is.na(`Nickel (and compounds) [lb]`),
-#         !(is.na(`Nickel (refinery dust) [lb]`)),
-#         !(is.na(`Sulfuric acid [lb]`))
-#         )
-#filter(Calcasieu, !(is.na(`Vinyl chloride [lb]`)))
-#filter(Calcasieu, !(is.na(`Trichloroethylene [lb]`)))
-#filter(Calcasieu, !(is.na(`1,3-Butadiene [lb]`)))
-#filter(Calcasieu, !(is.na(`Arsenic (and compounds) [lb]`)))
-#filter(Calcasieu, !(is.na(`Asbestos [lb]`)))
-#filter(Calcasieu, !(is.na(`Benzene [lb]`)))
-#filter(Calcasieu, !(is.na(`Beryllium (Table 51.1) [lb]`)))
-#filter(Calcasieu, !(is.na(`Cadmium (and compounds) [lb]`)))
-#filter(Calcasieu, !(is.na(`Chromium VI (and compounds) [lb]`)))
-#filter(Calcasieu, !(is.na(`Ethylene oxide [lb]`)))
-#filter(Calcasieu, !(is.na(`Formaldehyde [lb]`)))
-#filter(Calcasieu, !is.na(`Nickel (and compounds) [lb]`))
-#filter(Calcasieu, !(is.na(`Nickel (refinery dust) [lb]`)))
-#filter(Calcasieu, !(is.na(`Sulfuric acid [lb]`)))
-```
