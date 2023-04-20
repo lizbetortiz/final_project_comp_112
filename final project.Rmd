@@ -205,27 +205,45 @@ mean_calcasieu %>%
 ```
 
 
-```{r}
-#hahah
-ascension2 %>% 
-  ggplot(aes(x = REPORTING_YEAR, y = mean_concentration, fill = pollutant)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
-       x = "Year",
-       y = "Mean Concentration")
 
+
+
+```{r}
+ascension_facilities <- ascension %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(TOTAL_FACILITIES = n())
+
+ascension_facilities <- ascension_facilities %>% 
+  mutate(POLLUTANT_FACILITIES = nrow(ascension2 %>% 
+                                                             group_by(AI_NAME, 
+                                                                      REPORTING_YEAR) %>% 
+                                                             summarise(total = n())))
+  
 ```
 
 
 ```{r}
 ascension_facilities <- ascension %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
   group_by(REPORTING_YEAR) %>% 
-  summarise(total = n()) 
-  
+  summarise(TOTAL_FACILITIES = n() - c(nrow(ascension2 %>% 
+                               group_by(AI_NAME, 
+                                        REPORTING_YEAR) %>% 
+                               summarise(total = n())), 
+                            nrow(calcasieu2 %>%
+                                   group_by(AI_NAME, 
+                                            REPORTING_YEAR) %>% 
+                                   summarise(total = n())))) %>% 
+  mutate(POLLUTANT_FACILITIES = c(nrow(ascension2 %>% 
+                               group_by(AI_NAME, 
+                                        REPORTING_YEAR) %>% 
+                               summarise(total = n())), 
+                            nrow(calcasieu2 %>%
+                                   group_by(AI_NAME, 
+                                            REPORTING_YEAR) %>% 
+                                   summarise(total = n()))))
 ```
-
-
-
 
 
 
