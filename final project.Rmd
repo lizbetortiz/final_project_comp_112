@@ -206,6 +206,7 @@ mean_calcasieu %>%
 
 
 ```{r}
+#hahah
 ascension2 %>% 
   ggplot(aes(x = REPORTING_YEAR, y = mean_concentration, fill = pollutant)) +
   geom_bar(stat = "identity", position = "dodge") +
