@@ -113,7 +113,108 @@ ascension2 <- ascension %>% filter(rowSums(is.na(ascension)) != ncol(ascension) 
 calcasieu2 <- calcasieu %>% filter(rowSums(is.na(calcasieu)) != ncol(calcasieu) - 3)
 
 
+# Replace NA values with 0
+ascension2[is.na(ascension2)] <- 0
+calcasieu2[is.na(calcasieu2)] <- 0
 ```
+
+```{r}
+
+# Calculate the mean of the column mycolumn in mydata
+mean_Butadiene <- mean(ascension2$`1,3-Butadiene`)
+
+# Generate a summary of the mean of mycolumn
+summary_mean_Butadiene<- summary(mean_Butadiene)
+
+# View the summary
+summary_mean_Butadiene
+
+```
+
+```{r}
+#calculated the mean for each pollutant in ascension county from 2000 to 2018
+
+mean_ascension <- ascension2 %>%
+  # only show years from 2000 to 2018
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
+  group_by(REPORTING_YEAR) %>%
+  summarise(total_butadiene = mean(`1,3-Butadiene`), 
+            total_arsenic = mean(`Arsenic (and compounds)`),
+            total_asbestos = mean(Asbestos),
+            total_benzene = mean(Benzene),
+            total_benzidine = mean(Benzidine),
+            total_beryllium = mean(`Beryllium (Table 51.1)`),
+            total_cadmium = mean(`Cadmium (and compounds)`),
+            total_chromium = mean(`Chromium VI (and compounds)`),
+            total_ethylene = mean(`Ethylene oxide`),
+            total_formaldehyde = mean(Formaldehyde),
+            total_nickelc = mean(`Nickel (and compounds)`),
+            total_nickeld = mean(`Nickel (refinery dust)`),
+            total_sulfuric = mean(Trichloroethylene),
+            total_vinyl = mean(`Vinyl chloride`)) %>% 
+ 
+   pivot_longer(cols = 2:15,
+               names_to = "pollutant",
+               values_to = "total") %>% 
+ filter(`total` != 0)  # Filter out rows where total is 0
+  
+mean_ascension %>%  
+  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+       x = "Year",
+       y = "Mean Concentration") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+```
+```{r}
+#calculated the mean for each pollutant in calcasieu county from 2000 to 2018
+
+mean_calcasieu <- calcasieu2 %>%
+  # only show years from 2000 to 2018
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
+  group_by(REPORTING_YEAR) %>%
+  summarise(total_butadiene = mean(`1,3-Butadiene`),
+            total_arsenic = mean(`Arsenic (and compounds)`),
+            total_asbestos = mean(Asbestos),
+            total_benzene = mean(Benzene),
+            total_benzidine = mean(Benzidine),
+            total_beryllium = mean(`Beryllium (Table 51.1)`),
+            total_cadmium = mean(`Cadmium (and compounds)`),
+            total_chromium = mean(`Chromium VI (and compounds)`),
+            total_ethylene = mean(`Ethylene oxide`),
+            total_formaldehyde = mean(Formaldehyde),
+            total_nickelc = mean(`Nickel (and compounds)`),
+            total_nickeld = mean(`Nickel (refinery dust)`),
+            total_sulfuric = mean(Trichloroethylene),
+            total_vinyl = mean(`Vinyl chloride`)) %>% 
+ 
+   pivot_longer(cols = 2:15,
+               names_to = "pollutant",
+               values_to = "total") %>% 
+ filter(`total` != 0)  # Filter out rows where total is 0
+  
+mean_calcasieu %>%  
+  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+       x = "Year",
+       y = "Mean Concentration") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+```
+
+
+```{r}
+ascension2 %>% 
+  ggplot(aes(x = REPORTING_YEAR, y = mean_concentration, fill = pollutant)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+       x = "Year",
+       y = "Mean Concentration")
+
+```
+
 
 ```{r}
 ascension_facilities <- ascension %>% 
