@@ -119,17 +119,92 @@ calcasieu2[is.na(calcasieu2)] <- 0
 ```
 
 ```{r}
+# Table that holds the Ascension total number of facilities by year 
+ascension_total_facilities <- ascension %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(TOTAL_FACILITIES = n() ) 
 
-# Calculate the mean of the column mycolumn in mydata
-mean_Butadiene <- mean(ascension2$`1,3-Butadiene`)
+# Table that holds the Ascension total number of facilities that contributes to at least one cancer pollutant by year
+ascension_pollutant_facilities <- ascension2 %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(POLLUTANTL_FACILITIES = n() ) 
 
-# Generate a summary of the mean of mycolumn
-summary_mean_Butadiene<- summary(mean_Butadiene)
-
-# View the summary
-summary_mean_Butadiene
-
+# Table that holds Ascension pollutant and non-pollutant facilities
+ascension_facilities <- ascension_total_facilities %>% 
+  left_join(ascension_pollutant_facilities, 
+            join_by(REPORTING_YEAR))
 ```
+
+
+```{r}
+# Plotting Ascension findings
+ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - POLLUTANTL_FACILITIES) %>% 
+  select(REPORTING_YEAR,
+         NON_POLLUTANT_FACILITIES,
+         POLLUTANTL_FACILITIES) %>% 
+  pivot_longer(cols = 2:3,
+               names_to = "type",
+               values_to = "total") %>% 
+  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Ascencion Total Facilities (2000-2018)",
+       x = "Year",
+       y = "Total") + 
+ theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+ scale_fill_discrete(name = "", 
+                            labels = c("Non-pollutant facilities", 
+                                       "Pollutant Facilities"))
+  
+```
+
+
+```{r}
+# Table that holds the Calcasieu total number of facilities by year 
+calcasieu_total_facilities <- calcasieu %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(TOTAL_FACILITIES = n() ) 
+
+# Table that holds the Calcasieu total number of facilities that contributes to at least one cancer pollutant by year
+calcasieu_pollutant_facilities <- calcasieu2 %>% 
+  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
+  group_by(REPORTING_YEAR) %>% 
+  summarise(POLLUTANTL_FACILITIES = n() ) 
+
+# Table that holds Calcasieu pollutant and non-pollutant facilities
+calcasieu_facilities <- calcasieu_total_facilities %>% 
+  left_join(ascension_pollutant_facilities, 
+            join_by(REPORTING_YEAR))
+```
+
+
+```{r}
+# Plotting Calcasieu findings
+calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - POLLUTANTL_FACILITIES) %>% 
+  select(REPORTING_YEAR, 
+         POLLUTANTL_FACILITIES, 
+         NON_POLLUTANT_FACILITIES) %>% 
+  pivot_longer(cols = 2:3,
+               names_to = "type",
+               values_to = "total") %>% 
+  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Calcasieu Total Facilities (2000-2018)",
+       x = "Year",
+       y = "Total") + 
+ theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+ scale_fill_discrete(name = "", 
+                            labels = c("Non-pollutant facilities", 
+                                       "Pollutant Facilities"))
+  
+```
+
 
 ```{r}
 #calculated the mean for each pollutant in ascension county from 2000 to 2018
@@ -208,42 +283,21 @@ mean_calcasieu %>%
 
 
 
-```{r}
-ascension_facilities <- ascension %>% 
-  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
-  group_by(REPORTING_YEAR) %>% 
-  summarise(TOTAL_FACILITIES = n())
 
-ascension_facilities <- ascension_facilities %>% 
-  mutate(POLLUTANT_FACILITIES = nrow(ascension2 %>% 
-                                                             group_by(AI_NAME, 
-                                                                      REPORTING_YEAR) %>% 
-                                                             summarise(total = n())))
-  
+```{r}
+
+# Calculate the mean of the column mycolumn in mydata
+mean_Butadiene <- mean(ascension2$`1,3-Butadiene`)
+
+# Generate a summary of the mean of mycolumn
+summary_mean_Butadiene<- summary(mean_Butadiene)
+
+# View the summary
+summary_mean_Butadiene
+
 ```
 
 
-```{r}
-ascension_facilities <- ascension %>% 
-  filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
-  group_by(REPORTING_YEAR) %>% 
-  summarise(TOTAL_FACILITIES = n() - c(nrow(ascension2 %>% 
-                               group_by(AI_NAME, 
-                                        REPORTING_YEAR) %>% 
-                               summarise(total = n())), 
-                            nrow(calcasieu2 %>%
-                                   group_by(AI_NAME, 
-                                            REPORTING_YEAR) %>% 
-                                   summarise(total = n())))) %>% 
-  mutate(POLLUTANT_FACILITIES = c(nrow(ascension2 %>% 
-                               group_by(AI_NAME, 
-                                        REPORTING_YEAR) %>% 
-                               summarise(total = n())), 
-                            nrow(calcasieu2 %>%
-                                   group_by(AI_NAME, 
-                                            REPORTING_YEAR) %>% 
-                                   summarise(total = n()))))
-```
 
 
 
