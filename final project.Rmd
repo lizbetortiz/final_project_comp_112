@@ -5,6 +5,19 @@ date: "2023-04-04"
 output: html_document
 ---
 
+Because of the area's abnormally high occurrence of cancer and other illnesses, Cancer Alley, Louisiana, is an 85-mile-long stretch of petroleum chemical plants along the Mississippi River. It is known that these petrochemical and industrial facilities leak pollutants into the air, water, and soil. The region, located in Southeastern Louisiana, stretches from New Orleans to Baton Rouge and has a population of about 45,000. The residents are primarily poor and African American, and they have been fighting for years to get these companies to reduce their emissions to improve the air and water quality in their surrounding homes. The businesses in Cancer Alley claim to be boosting the local economy and creating jobs, but at what cost? The health and well-being of the local populace, not the revenues of these businesses, should be the priority.
+
+Our team decided to analyze The Louisiana Department of Environmental Quality (LDEQ) emissions Inventory data set which provides information about the amount and type of pollutants emitted into the air, water, and land in Louisiana by industrial facilities.
+
+The LDEQ quantifies emissions inventory for public data sets using a variety of methods, including:
+
+1. Direct measurement: This involves using instruments to directly measure emissions from stationary sources such as industrial plants, power plants, and other facilities.
+
+2. Calculation: This involves using emission factors and activity data to estimate emissions from various sources. Emission factors represent the number of pollutants emitted per unit of activity, such as the amount of carbon dioxide emitted per unit of fossil fuel burned.
+
+3. Modeling: This involves using computer models to estimate emissions based on various inputs, including meteorological data, land use data, and other factors that can influence emissions.
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
@@ -21,8 +34,23 @@ data_set_after_2015 <- read_excel("Annual_Certified_Emissions_after_2015.xlsx")
 #View(dataset)
 ```
 
-```{r}
+The National Institutes of Health (NIH) is a part of the U.S. Department of Health and Human Services and is the nation's medical research agency that makes important discoveries that improve health and save lives.
+Some of the most commonly recognized pollutants that contribute to cancer, as identified by the NIH, include:
 
+1. Benzene: This is a colorless, highly flammable chemical used to produce plastics, synthetic fibers, and other products. It is also found in gasoline and tobacco smoke. Benzene exposure has been linked to leukemia, lymphoma, and other blood cancers.
+
+2. Asbestos: This is a naturally occurring mineral fiber widely used in building materials such as insulation, roofing, and flooring until its health hazards were recognized. Asbestos exposure has been linked to lung cancer, mesothelioma, and other cancers.
+
+3. Arsenic: This is a naturally occurring element found in groundwater and soil. Arsenic exposure can occur through drinking water, food, and air pollution. Arsenic exposure has been linked to skin, lung, liver, bladder, and kidney cancer.
+
+4. Vinyl chloride: This is a colorless gas used to produce polyvinyl chloride (PVC) plastic products such as pipes, wire coatings, and flooring. Vinyl chloride exposure has been linked to liver cancer and other cancers.
+
+5. Formaldehyde: This is a colorless gas used to produce resins, textiles, and other products and is also found in tobacco smoke and other sources. Formaldehyde exposure has been linked to leukemia and other cancers.
+
+
+It's important to note that many other chemical pollutants have been linked to cancer and that the same risks associated with exposure to these chemicals can vary depending on the dose, duration, and other factors. Cancer is a complex disease with many causes, and exposure to these chemicals is just one of many factors that can contribute to cancer risk. We decided to create a new dataset that shows the 15 chemical pollutants that have been to cancer in the state of Louisiana. Another important note is that the dataset raged from 1991-Present, but for simplistic purposes we decided to focus on 2000-2018.
+
+```{r}
 # Select pollutants/variables that contribute the most to cancer
 data_set_before_2015 <- data_set_before_2015 %>% 
   select(REPORTING_YEAR,
@@ -93,6 +121,15 @@ data_set <- data_set_before_2015 %>%
                         `Vinyl chloride`)) %>% 
   arrange(AI_NAME)
 ```
+The Environmental Integrity Project (EIP) is a nonpartisan, nonprofit watchdog organization that advocates for effective enforcement of environmental laws. Comprised of former EPA enforcement attorneys, public interest lawyers, analysts, investigators, and community organizers, EIP has three goals:
+
+- To illustrate through objective facts and figures how the failure to enforce or implement environmental laws increases pollution and harms public health;
+
+- To hold federal and state agencies, as well as individual corporations, accountable for failing to enforce or comply with environmental laws; and
+
+- To help local communities obtain the protections of environmental laws.
+
+According to the EIP, 
 
 
 ```{r}
@@ -110,8 +147,16 @@ calcasieu <- data_set %>%
 ```{r}
 # Selecting facilities that contributed to the production of at least one pollutant
 ascension2 <- ascension %>% filter(rowSums(is.na(ascension)) != ncol(ascension) - 3)
-calcasieu2 <- calcasieu %>% filter(rowSums(is.na(calcasieu)) != ncol(calcasieu) - 3)
 
+# Remove Columns by Index
+ascension2 <- ascension2[-c(2:3)]
+
+ascension2
+
+calcasieu2 <- calcasieu %>% filter(rowSums(is.na(calcasieu)) != ncol(calcasieu) - 3)
+calcasieu2 <- calcasieu2[-c(2:3)]
+
+ascension2
 
 # Replace NA values with 0
 ascension2[is.na(ascension2)] <- 0
@@ -160,6 +205,9 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                                        "Pollutant Facilities"))
   
 ```
+The graph above shows the 
+
+
 
 
 ```{r}
@@ -209,34 +257,35 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
 ```{r}
 #calculated the mean for each pollutant in ascension county from 2000 to 2018
 
-mean_ascension <- ascension2 %>%
+total_ascension <- ascension2 %>%
   # only show years from 2000 to 2018
   filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
   group_by(REPORTING_YEAR) %>%
-  summarise(total_butadiene = mean(`1,3-Butadiene`), 
-            total_arsenic = mean(`Arsenic (and compounds)`),
-            total_asbestos = mean(Asbestos),
-            total_benzene = mean(Benzene),
-            total_benzidine = mean(Benzidine),
-            total_beryllium = mean(`Beryllium (Table 51.1)`),
-            total_cadmium = mean(`Cadmium (and compounds)`),
-            total_chromium = mean(`Chromium VI (and compounds)`),
-            total_ethylene = mean(`Ethylene oxide`),
-            total_formaldehyde = mean(Formaldehyde),
-            total_nickelc = mean(`Nickel (and compounds)`),
-            total_nickeld = mean(`Nickel (refinery dust)`),
-            total_sulfuric = mean(Trichloroethylene),
-            total_vinyl = mean(`Vinyl chloride`)) %>% 
- 
-   pivot_longer(cols = 2:15,
+  summarise( total_benzene = sum(Benzene),
+              total_butadiene = sum(`1,3-Butadiene`), 
+              total_ethylene = sum(`Ethylene oxide`),
+              total_formaldehyde = sum(Formaldehyde),
+              total_nickelc = sum(`Nickel (and compounds)`),
+    
+            others = sum(`Arsenic (and compounds)` +  Asbestos + 
+            Benzidine + `Beryllium (Table 51.1)`  + `Cadmium (and compounds)` , 
+          `Chromium VI (and compounds)` + `Ethylene oxide` + Formaldehyde +  `Nickel (refinery dust)` +
+          Trichloroethylene+
+         `Vinyl chloride`)) 
+
+total_ascension <- total_ascension %>% 
+  pivot_longer(cols = 2:7,
                names_to = "pollutant",
                values_to = "total") %>% 
  filter(`total` != 0)  # Filter out rows where total is 0
-  
-mean_ascension %>%  
+```
+
+
+```{r}
+total_ascension %>%  
   ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#CC9966", "slategray1", "#006666", "#B2182B"), labels = c("Arsenic", "Benzene", "Beryllium", "Butadiene", "Cadmium", "Chromium", "Ethylene", "Formaldehyde", "Nickel Compounds", "Sulfuric", "Vinyl")) +
+  scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2")) +
   
   labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
        x = "Year",
@@ -247,34 +296,36 @@ mean_ascension %>%
 ```{r}
 #calculated the mean for each pollutant in calcasieu county from 2000 to 2018
 
-mean_calcasieu <- calcasieu2 %>%
+total_calcasieu <- calcasieu2 %>%
   # only show years from 2000 to 2018
   filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
   group_by(REPORTING_YEAR) %>%
-  summarise(total_butadiene = mean(`1,3-Butadiene`),
-            total_arsenic = mean(`Arsenic (and compounds)`),
-            total_asbestos = mean(Asbestos),
-            total_benzene = mean(Benzene),
-            total_benzidine = mean(Benzidine),
-            total_beryllium = mean(`Beryllium (Table 51.1)`),
-            total_cadmium = mean(`Cadmium (and compounds)`),
-            total_chromium = mean(`Chromium VI (and compounds)`),
-            total_ethylene = mean(`Ethylene oxide`),
-            total_formaldehyde = mean(Formaldehyde),
-            total_nickelc = mean(`Nickel (and compounds)`),
-            total_nickeld = mean(`Nickel (refinery dust)`),
-            total_sulfuric = mean(Trichloroethylene),
-            total_vinyl = mean(`Vinyl chloride`)) %>% 
+  
+  summarise( total_benzene = sum(Benzene),
+              total_butadiene = sum(`1,3-Butadiene`), 
+              total_ethylene = sum(`Ethylene oxide`),
+              total_formaldehyde = sum(Formaldehyde),
+              total_nickelc = sum(`Nickel (and compounds)`),
+  
+  others = sum(`Arsenic (and compounds)` +  Asbestos + 
+            Benzidine + `Beryllium (Table 51.1)`  + `Cadmium (and compounds)` , 
+          `Chromium VI (and compounds)` + `Ethylene oxide` + Formaldehyde +  `Nickel (refinery dust)` +
+          Trichloroethylene+
+         `Vinyl chloride`)) 
  
-   pivot_longer(cols = 2:15,
+  total_calcasieu <- total_calcasieu %>% 
+  pivot_longer(cols = 2:7,
                names_to = "pollutant",
                values_to = "total") %>% 
  filter(`total` != 0)  # Filter out rows where total is 0
-  
-mean_calcasieu %>%  
+```
+
+
+```{r}
+total_calcasieu %>%  
   ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
   geom_bar(stat = "identity") +
-   scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#CC9966", "slategray1", "#006666", "#B2182B", "#9999CC", "#660066","#cc6600"), labels = c("Arsenic", "Benzene", "Beryllium", "Butadiene", "Cadmium", "Chromium", "Ethylene", "Formaldehyde", "Nickel Compounds", "Sulfuric", "Vinyl", "Asbestos", "Benzidine")) +
+   scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"),) +
   labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
        x = "Year",
        y = "Mean Concentration") +
@@ -292,39 +343,6 @@ summary_mean_Butadiene<- summary(mean_Butadiene)
 # View the summary
 summary_mean_Butadiene
 
-```
-
-
-
-
-
-
-
-
-
-
-
-```{r}
-# Creating a new table that holds the total number of facilities in each county and the total number of facilities that contributed to any of the selected pollutants
-
-facilities_by_county <- tibble(county = c("Ascension", 
-                                          "Calcasieu"),
-                               total_facilities = c(nrow(ascension %>% 
-                                                           group_by(AI_NAME, 
-                                                                    REPORTING_YEAR) %>% 
-                                                           summarise(total = n())), 
-                                                    nrow(calcasieu %>%
-                                                           group_by(AI_NAME, 
-                                                                    REPORTING_YEAR) %>% 
-                                                           summarise(total = n()))),
-                               pollutant_facilities = c(nrow(ascension2 %>% 
-                                                           group_by(AI_NAME, 
-                                                                    REPORTING_YEAR) %>% 
-                                                           summarise(total = n())), 
-                                                        nrow(calcasieu2 %>%
-                                                               group_by(AI_NAME, 
-                                                                        REPORTING_YEAR) %>% 
-                                                               summarise(total = n()))))
 ```
 
 
@@ -347,74 +365,16 @@ ggplot(facilities_by_county2, aes(x = factor(county),
 
 ```
 
+In conclusion The LDEQ emissions inventory data set can tell us:
 
+1. The amount of various pollutants emitted: The data set provides information on the amounts of pollutants such as carbon monoxide, nitrogen oxides, sulfur dioxide, volatile organic compounds, and particulate matter emitted by different sources.
 
+2. The types of sources that emit pollutants: The data set provides information on the types of sources that emit pollutants, including power plants, refineries, chemical plants, and other industrial facilities, as well as transportation sources such as cars, trucks, and airplanes.
 
+3. The geographic locations of emissions: The data set provides information on the geographic locations of emissions, including emissions from specific facilities and emissions from broader geographic areas such as cities or regions.
 
+4. Trends in emissions over time: The data set can be used to track changes in emissions over time, which can help assess the effectiveness of pollution control measures and other environmental policies.
 
+By analyzing the LDEQ emissions inventory data set, researchers, policymakers, and the public can better understand the sources and impacts of pollution in Louisiana and develop strategies to reduce emissions and protect public health and the environment. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{r}
-testing_ascension <- ascension %>% 
-  anti_join(ascension2, 
-            by = join_by(REPORTING_YEAR,
-                        AI_NAME, 
-                        PARISH_OR_COUNTY_DESC,
-                        `1,3-Butadiene`,
-                        `Arsenic (and compounds)`,
-                        `Asbestos`,
-                        `Benzene`,
-                        `Benzidine`,
-                        `Beryllium (Table 51.1)`,
-                        `Cadmium (and compounds)`,
-                        `Chromium VI (and compounds)`,
-                        `Ethylene oxide`,
-                        `Formaldehyde`,
-                        `Nickel (and compounds)`,
-                        `Nickel (refinery dust)`,
-                        `Sulfuric acid`,
-                        `Trichloroethylene`,
-                        `Vinyl chloride`)) %>% 
-  arrange(AI_NAME)
-
-testing_calcasieu <- calcasieu %>% 
-  anti_join(calcasieu2, 
-            by = join_by(REPORTING_YEAR,
-                        AI_NAME, 
-                        PARISH_OR_COUNTY_DESC,
-                        `1,3-Butadiene`,
-                        `Arsenic (and compounds)`,
-                        `Asbestos`,
-                        `Benzene`,
-                        `Benzidine`,
-                        `Beryllium (Table 51.1)`,
-                        `Cadmium (and compounds)`,
-                        `Chromium VI (and compounds)`,
-                        `Ethylene oxide`,
-                        `Formaldehyde`,
-                        `Nickel (and compounds)`,
-                        `Nickel (refinery dust)`,
-                        `Sulfuric acid`,
-                        `Trichloroethylene`,
-                        `Vinyl chloride`)) %>% 
-  arrange(AI_NAME)
-```
 
