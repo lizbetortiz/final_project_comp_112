@@ -277,7 +277,12 @@ total_ascension <- total_ascension %>%
   pivot_longer(cols = 2:7,
                names_to = "pollutant",
                values_to = "total") %>% 
- filter(`total` != 0)  # Filter out rows where total is 0
+ filter(`total` != 0)  %>% # Filter out rows where total is 0
+  mutate(group = ifelse(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2006, 
+                        1,
+                        ifelse(REPORTING_YEAR >= 2007 & REPORTING_YEAR <= 2012, 
+                               2,
+                               3)))
 ```
 
 
