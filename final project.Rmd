@@ -34,6 +34,23 @@ data_set_after_2015 <- read_excel("Annual_Certified_Emissions_after_2015.xlsx")
 #View(dataset)
 ```
 
+```{r}
+# Reusable Variables
+graph_colors <- c("#999999", 
+                  "#E69F00", 
+                  "#56B4E9", 
+                  "#009E73", 
+                  "#F0E442", 
+                  "#0072B2")
+legend_variables_labels <- c("Others",
+                             "Benzene",
+                             "Butadiene",
+                             "Ethylene",
+                             "Formaldehyde",
+                             "Vinyl")
+```
+
+
 The National Institutes of Health (NIH) is a part of the U.S. Department of Health and Human Services and is the nation's medical research agency that makes important discoveries that improve health and save lives.
 Some of the most commonly recognized pollutants that contribute to cancer, as identified by the NIH, include:
 
@@ -151,12 +168,9 @@ ascension2 <- ascension %>% filter(rowSums(is.na(ascension)) != ncol(ascension) 
 # Remove Columns by Index
 ascension2 <- ascension2[-c(2:3)]
 
-ascension2
 
 calcasieu2 <- calcasieu %>% filter(rowSums(is.na(calcasieu)) != ncol(calcasieu) - 3)
 calcasieu2 <- calcasieu2[-c(2:3)]
-
-ascension2
 
 # Replace NA values with 0
 ascension2[is.na(ascension2)] <- 0
@@ -194,15 +208,17 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                values_to = "total") %>% 
   ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
   geom_bar(stat = "identity") +
-  labs(title = "Ascencion Total Facilities (2000-2018)",
+  labs(title = "Total Number of Facilities in Ascension (2000-2018)",
        x = "Year",
        y = "Total") + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
- scale_fill_discrete(name = "", 
-                            labels = c("Non-pollutant facilities", 
-                                       "Pollutant Facilities"))
+  scale_fill_manual(name="",
+                    values=c("#999999", 
+                             "#E69F00"), 
+                    labels = c("Non-pollutant facilities", 
+                               "Pollutant Facilities"))
   
 ```
 The graph above shows the 
@@ -241,113 +257,262 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                values_to = "total") %>% 
   ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
   geom_bar(stat = "identity") +
-  labs(title = "Calcasieu Total Facilities (2000-2018)",
+  labs(title = "Total Number of Facilities in Calcasieu (2000-2018)",
        x = "Year",
        y = "Total") + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
- scale_fill_discrete(name = "", 
-                            labels = c("Non-pollutant facilities", 
-                                       "Pollutant Facilities"))
+  scale_fill_manual(name="",
+                    values=c("#999999", 
+                             "#E69F00"), 
+                    labels = c("Non-pollutant facilities", 
+                               "Pollutant Facilities"))
   
 ```
 
 
 ```{r}
-#calculated the mean for each pollutant in ascension county from 2000 to 2018
+#calculated the amount for each pollutant in ascension county from 2000 to 2018
 
 total_ascension <- ascension2 %>%
   # only show years from 2000 to 2018
   filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
   group_by(REPORTING_YEAR) %>%
   summarise( total_benzene = sum(Benzene),
-              total_butadiene = sum(`1,3-Butadiene`), 
-              total_ethylene = sum(`Ethylene oxide`),
-              total_formaldehyde = sum(Formaldehyde),
-              total_Vinyl = sum(`Vinyl chloride`),
-    
-            others = sum(`Arsenic (and compounds)` +  Asbestos + 
-            Benzidine + `Beryllium (Table 51.1)`  + `Cadmium (and compounds)` , 
-          `Chromium VI (and compounds)` + `Ethylene oxide` + Formaldehyde +  `Nickel (refinery dust)` +
-          Trichloroethylene+
-         `Nickel (and compounds)`)) 
+             total_butadiene = sum(`1,3-Butadiene`),
+             total_ethylene = sum(`Ethylene oxide`),
+             total_formaldehyde = sum(Formaldehyde),
+             total_vinyl_chloride = sum(`Vinyl chloride`),
+             others = sum(`Arsenic (and compounds)` +
+                           Asbestos +
+                           Benzidine + 
+                           `Beryllium (Table 51.1)` + 
+                           `Cadmium (and compounds)` +
+                           `Chromium VI (and compounds)` + 
+                           `Ethylene oxide` + 
+                           Formaldehyde +  
+                           `Nickel (refinery dust)` +
+                           `Nickel (and compounds)` +
+                           Trichloroethylene)) 
 
 total_ascension <- total_ascension %>% 
   pivot_longer(cols = 2:7,
                names_to = "pollutant",
                values_to = "total") %>% 
- filter(`total` != 0)  %>% # Filter out rows where total is 0
+  filter(`total` != 0)  %>% # Filter out rows where total is 0
   mutate(group = ifelse(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2006, 
                         1,
                         ifelse(REPORTING_YEAR >= 2007 & REPORTING_YEAR <= 2012, 
                                2,
                                3)))
-```
 
+# Creating subsets for different year range
+total_ascension_subset1 <- filter(total_ascension, `group` == 1)
+total_ascension_subset2 <- filter(total_ascension, `group` == 2)
+total_ascension_subset3 <- filter(total_ascension, `group` == 3)
+```
 
 ```{r}
 total_ascension %>%  
-  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2")) +
-  
-  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+  ggplot() +
+  geom_bar(stat = "identity", mapping = aes(x = factor(REPORTING_YEAR), 
+                                            y = total, 
+                                            fill = pollutant), 
+           position = "fill") +
+   scale_fill_manual(name = "Names of Pollutant", 
+                     values = graph_colors,
+                     labels = legend_variables_labels) +
+  labs(title = "Ascension Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
        y = "Mean Concentration") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) 
+```
+
+```{r}
+# Plotting 3 Ascension subsets to visualize every pollutant by year better
+
+# Subset 1
+total_ascension_subset1 %>%  
+  ggplot() +
+  geom_col(mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), 
+           position = position_dodge(0.9)) +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  labs(title = "Ascension Prevalence of Pollutant Concentration (2000-2006)",
+       x = "Year",
+       y = "Total Concentration (pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
+
+# Subset 2
+total_ascension_subset2 %>%  
+  ggplot() +
+  geom_col(mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), 
+           position = position_dodge(0.9)) +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  
+  labs(title = "Ascension Prevalence of Pollutant Concentration (2007-2012)",
+       x = "Year",
+       y = "Total Concentration (pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
+
+# Subset 3
+total_ascension_subset3 %>%  
+  ggplot() +
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total, 
+                         fill = pollutant), 
+           position = position_dodge(0.9)) +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  
+  labs(title = "Ascension Prevalence of Pollutant Concentration (2013-2018)",
+       x = "Year",
+       y = "Total Concentration (pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
 
 ```
-```{r}
-#calculated the mean for each pollutant in calcasieu county from 2000 to 2018
 
+
+
+
+
+```{r}
+#calculated the amount of each pollutant in Calcasieu county from 2000 to 2018
 total_calcasieu <- calcasieu2 %>%
   # only show years from 2000 to 2018
   filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>%
   group_by(REPORTING_YEAR) %>%
-  
   summarise( total_benzene = sum(Benzene),
-              total_butadiene = sum(`1,3-Butadiene`), 
-              total_ethylene = sum(`Ethylene oxide`),
-              total_formaldehyde = sum(Formaldehyde),
-              total_Trichloroethylene = sum(Trichloroethylene),
-  
-  others = sum(`Arsenic (and compounds)` +  Asbestos + 
-            Benzidine + `Beryllium (Table 51.1)`  + `Cadmium (and compounds)` , 
-          `Chromium VI (and compounds)` + `Ethylene oxide` + Formaldehyde +  `Nickel (refinery dust)` +
-         `Nickel (and compounds)`,+
-         `Vinyl chloride`)) 
+             total_butadiene = sum(`1,3-Butadiene`),
+             total_ethylene = sum(`Ethylene oxide`),
+             total_formaldehyde = sum(Formaldehyde),
+             total_vinyl_chloride = sum(`Vinyl chloride`),
+             others = sum(`Arsenic (and compounds)` +
+                           Asbestos +
+                           Benzidine + 
+                           `Beryllium (Table 51.1)` + 
+                           `Cadmium (and compounds)` +
+                           `Chromium VI (and compounds)` + 
+                           `Ethylene oxide` + 
+                           Formaldehyde +  
+                           `Nickel (refinery dust)` +
+                           `Nickel (and compounds)` +
+                           Trichloroethylene))  
  
-  total_calcasieu <- total_calcasieu %>% 
+total_calcasieu <- total_calcasieu %>% 
   pivot_longer(cols = 2:7,
                names_to = "pollutant",
                values_to = "total") %>% 
- filter(`total` != 0)  # Filter out rows where total is 0
+  filter(`total` != 0)  %>% # Filter out rows where total is 0
+  mutate(group = ifelse(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2006, 
+                        1,
+                        ifelse(REPORTING_YEAR >= 2007 & REPORTING_YEAR <= 2012, 
+                               2,
+                               3)))
+  # Creating subsets for different year range
+total_calcasieu_subset1 <- filter(total_calcasieu, `group` == 1)
+total_calcasieu_subset2 <- filter(total_calcasieu, `group` == 2)
+total_calcasieu_subset3 <- filter(total_calcasieu, `group` == 3)
 ```
+
 
 
 ```{r}
 total_calcasieu %>%  
   ggplot() +
-  geom_col(mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), position = "dodge") +
-   scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"),) +
-  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+  geom_bar(stat = "identity", 
+           mapping = aes(x = factor(REPORTING_YEAR), 
+                         y = total, 
+                         fill = pollutant), 
+           position = "fill") +
+   scale_fill_manual(name = "Names of Pollutant", 
+                     values = graph_colors,
+                     labels = legend_variables_labels) +
+  labs(title = "Calcasieu Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
        y = "Mean Concentration") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1))
 ```
 
 ```{r}
-total_calcasieu %>%  
+# Plotting 3 Ascension subsets to visualize every pollutant by year better
+
+# Substet 1 
+total_calcasieu_subset1 %>%  
   ggplot() +
-  geom_bar(stat = "identity", mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), position = "fill") +
-   scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"),) +
-  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total/10000, 
+                         fill = pollutant), 
+           position = position_dodge(0.9)) +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  labs(title = "Calcasieu Prevalence of Pollutant Concentration (2000-2006)",
        x = "Year",
-       y = "Mean Concentration") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+       y = "Total Concentration (10,000 pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
+
+# Subset 2
+total_calcasieu_subset2 %>%  
+  ggplot() +
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total/10000, 
+                         fill = pollutant), 
+           position = "dodge") +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  
+  labs(title = "Calcasieu Prevalence of Pollutant Concentration (2007-2012)",
+       x = "Year",
+       y = "Total Concentration (10,000 pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
+
+
+# Substet 3
+total_calcasieu_subset3%>%  
+  ggplot() +
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total/10000, 
+                         fill = pollutant), 
+           position = "dodge") +
+  scale_fill_manual(name = "Names of Pollutant", 
+                    values=graph_colors,
+                    labels = legend_variables_labels) +
+  labs(title = "Calcasieu Prevalence of Pollutant Concentration (2013-2018)",
+       x = "Year",
+       y = "Total Concentration (10,000 pounds)") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 1)) +
+  scale_x_continuous(n.breaks = 10)
+
 ```
+
 
 
 ```{r}
@@ -363,7 +528,7 @@ summary_mean_Butadiene
 ```
 
 
-```{r}
+```{code}
 facilities_by_county2 <- facilities_by_county %>% 
   pivot_longer(cols=2:3, 
                names_to = "names", 
