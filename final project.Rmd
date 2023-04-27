@@ -1,22 +1,90 @@
 ---
 title: "final project"
 author: "Lizbet Ortiz"
-date: "2023-04-04"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
 ---
 
-Because of the area's abnormally high occurrence of cancer and other illnesses, Cancer Alley, Louisiana, is an 85-mile-long stretch of petroleum chemical plants along the Mississippi River. It is known that these petrochemical and industrial facilities leak pollutants into the air, water, and soil. The region, located in Southeastern Louisiana, stretches from New Orleans to Baton Rouge and has a population of about 45,000. The residents are primarily poor and African American, and they have been fighting for years to get these companies to reduce their emissions to improve the air and water quality in their surrounding homes. The businesses in Cancer Alley claim to be boosting the local economy and creating jobs, but at what cost? The health and well-being of the local populace, not the revenues of these businesses, should be the priority.
+Introduction 
 
-Our team decided to analyze The Louisiana Department of Environmental Quality (LDEQ) emissions Inventory data set which provides information about the amount and type of pollutants emitted into the air, water, and land in Louisiana by industrial facilities.
+Cancer Alley in Louisiana is an 85-mile-long region with a concentration of petrochemical and industrial plants along the Mississippi River, contributing to the area's high incidence of cancer and other illnesses. The area's population of approximately 45,000 residents is predominantly low-income, and African Americans, and they have been advocating for the reduction of emissions from these facilities that pollute the air, water, and soil in their surrounding homes. 
 
-The LDEQ quantifies emissions inventory for public data sets using a variety of methods, including:
+The Louisiana Department of Environmental Quality (LDEQ) emissions Inventory data set from 1991 to 2022 provides information about the amount and type of pollutants released by industrial facilities in Louisiana. This dataset includes facility location and emissions data in pounds or tons per year. Our team analyzed this dataset to better understand the impact of emissions from these facilities on the health and well-being of the local populace, as opposed to the economic benefits touted by these businesses.
 
-1. Direct measurement: This involves using instruments to directly measure emissions from stationary sources such as industrial plants, power plants, and other facilities.
 
-2. Calculation: This involves using emission factors and activity data to estimate emissions from various sources. Emission factors represent the number of pollutants emitted per unit of activity, such as the amount of carbon dioxide emitted per unit of fossil fuel burned.
 
-3. Modeling: This involves using computer models to estimate emissions based on various inputs, including meteorological data, land use data, and other factors that can influence emissions.
+How are chemical emissions quantified?
 
+The LDEQ employs multiple methods to quantify emissions inventory in their public datasets, including direct measurement, calculation, and modeling. 
+
+Direct measurement: Utilizes specialized instruments to measure emissions directly from industrial and power plants.
+
+Calculation: Involves estimating emissions from various sources using emission factors and activity data. For example,emission factors represent the amount of pollutants emitted per unit of activity, such as the amount of carbon dioxide released per unit of fossil fuel burned.
+
+Modeling: Utilizes computer models to estimate emissions based on various inputs, such as meteorological data and land use data, that can affect emissions.
+
+
+Data Limitations
+
+The LDEQ has identified limitations in emissions reports, which can impact the accuracy of measuring pollution from companies.
+
+Outdated equipment and incomplete data may result in underestimating or missing pollutants.
+Companies may also underestimate their pollution to avoid penalties or regulations.
+
+Furthermore, emissions reports only cover a limited range of pollutants, which can exclude other harmful substances. These limitations may have adverse public health and economic consequences. These limitations are particularly significant in Louisiana, which has a high concentration of industrial facilities emitting pollutants. 
+
+Additionally, limitations our team found within this dataset are
+
+It's worth noting that this data set only includes facilities with permits subject to LAC 33:III.919 and/or LAC 33:III.510. As a result, some data may be missing, which may lead to the assumption of non-contribution to a pollutant for the purpose of analysis. 
+There are also gaps in the data due to some facilities not reporting every year. 
+
+For more detailed information about these limitations, refer to the LEDQ document linked above.
+
+
+
+
+Cancer Causing Chemicals
+
+The NIH, a division of the U.S. Department of Health and Human Services, conducts vital medical research to enhance health and extend lives. The NIH recognizes various carcinogenic pollutants, including:
+
+Benzene: A highly flammable, colorless compound utilized to manufacture synthetic fibers, plastics, and other items. It's also found in tobacco smoke and gasoline. Exposure to benzene has been associated with leukemia, lymphoma, and other blood cancers.
+
+Butadiene: A colorless gas used in the production of synthetic rubber and other materials, and exposure to this chemical has been linked to an increased risk of leukemia and other blood cancers.
+
+Ethylene: A gas used in the production of plastics, rubber, and other materials, and exposure to this chemical has been linked to an increased risk of breast cancer, leukemia, and lymphoma.
+
+Formaldehyde: A colorless gas used to generate resins, textiles, and other products, also found in tobacco smoke and other sources. Leukemia and other cancers have been linked to formaldehyde exposure.
+
+Vinyl chloride: A colorless gas used to manufacture PVC plastic products like pipes, wire coatings, and flooring. Vinyl chloride exposure has been linked to liver cancer and other cancers.
+
+
+It's important to note that the risks associated with exposure to these chemicals can vary depending on the dose, duration, and other factors. Cancer is a complex illness with numerous causes, and exposure to these substances is just one of several factors that may contribute to cancer risk.
+
+
+
+Project Focus: Ascension and Calcasieu Counties
+
+The EIP's 2018 report highlighted that only ten counties in the United States contributed over a third (34%) of total toxicity-weighted air emissions. Intriguingly, Ascension and Calcasieu, both located in Louisiana, were among these counties. 
+
+After analyzing the original dataset, we focused on the 15 chemical pollutants related to cancer, out of the initial 173. The pollutants were reported in Louisiana's dataset, and include 
+1,3-Butadiene
+Arsenic (and compounds)
+Asbestos
+Benzene
+Benzidine
+Beryllium
+Cadmium (and compounds)
+Chromium VI (and compounds)
+Ethylene oxide
+Formaldehyde
+Nickel (and compounds)
+Nickel (refinery dust)
+Sulfuric acid
+Trichloroethylene
+Vinyl chloride. 
+
+It's worth noting that the original dataset covered the period between 1991 and present. However, we focused on the 2000-2018 period to explore trends further in line with the EIP's 2018 report.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -210,7 +278,7 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
   geom_bar(stat = "identity") +
   labs(title = "Total Number of Facilities in Ascension (2000-2018)",
        x = "Year",
-       y = "Total") + 
+       y = "Total Facilities") + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -221,7 +289,15 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                                "Pollutant Facilities"))
   
 ```
-The graph above shows the 
+Table 1. Displays a bar graph that categorizes the total number of facilities in Ascension Parish according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.
+
+This graph provides a visual representation of Ascension Parish's facilities, distinguishing between those that produce pollutants and those that do not.
+
+Non-pollutant facilities remained stable throughout the years, with a slight uptick in 2018.
+Pollutant facilities saw a significant increase over the same period. 
+
+This information is useful for identifying areas of concern regarding pollution control and prevention efforts and gaining an understanding of the facilities' spatial distribution.
+
 
 
 
@@ -259,7 +335,7 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
   geom_bar(stat = "identity") +
   labs(title = "Total Number of Facilities in Calcasieu (2000-2018)",
        x = "Year",
-       y = "Total") + 
+       y = "Total Facilities") + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -270,6 +346,23 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                                "Pollutant Facilities"))
   
 ```
+Table 2. Displays a bar graph that categorizes the total number of facilities in Calcasieu County according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.
+
+This graph provides a visual representation of Calcasieu's facilities, distinguishing between those that produce pollutants and those that do not.
+
+Non-pollutant facilities had a dramatic downfall in the year 2016 and remained slightly constant.
+Pollutant facilities saw a slight increase over the same period. 
+
+
+It's not clear that there was a significant drop in the number of chemical facilities in Calcasieu Parish, Louisiana after 2005. However, it's worth noting that the chemical industry has faced a number of challenges in recent years, including changes in market conditions and regulatory requirements, as well as the impacts of natural disasters such as experiencing significant impacts from Hurricane Rita, which made landfall in the area less than a month after Hurricane Katrina. 
+
+Rita was a Category 3 hurricane that caused widespread damage and power outages in southwest Louisiana, including Calcasieu Parish. The storm surge and high winds caused significant damage to buildings and infrastructure, and many residents were displaced from their homes for weeks or months.
+
+For example, the Citgo refinery in Lake Charles, which is located in Calcasieu Parish, had to shut down for several weeks after the storm due to flooding and power outages. However, many other companies in the area were able to quickly resume operations and continue producing essential products such as gasoline and other fuels to support recovery efforts in the region.
+
+One potential factor that may have contributed to a decline in the number of facilities in the area is increasing competition from other regions, particularly those with access to cheaper feedstocks or lower operating costs. For example, the shale gas boom in Texas and other parts of the country has led to significant investments in chemical production facilities in those areas.
+
+Overall, it's likely that a combination of factors has contributed to changes in the number and composition of chemical facilities in Calcasieu Parish and other industrial regions over time.
 
 
 ```{r}
@@ -325,11 +418,20 @@ total_ascension %>%
                      labels = legend_variables_labels) +
   labs(title = "Ascension Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
-       y = "Mean Concentration") +
+       y = "Total Concentration") +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) 
 ```
+Table 3. Displays a bar graph that categorizes the six major pollutants released in the Ascension parish for the years 2000-2018.
+
+The graph reveals a fluctuating pattern of pollutant concentrations over the years.
+Benzene and Ethylene oxide with some pollutants showing a decreasing trend. 
+Formaldehyde, 1,3-Butadiene, Vinyl chloride, and Others show an increasing trend 
+
+Furthermore, the "others" category, a combination of various pollutants, exhibits consistently high concentration levels throughout the years.
+In conclusion, the graph emphasizes the ongoing need for monitoring and managing pollutant concentrations in the Ascension parish to ensure that they remain within safe limits.
+
 
 ```{r}
 # Plotting 3 Ascension subsets to visualize every pollutant by year better
@@ -446,11 +548,20 @@ total_calcasieu %>%
                      labels = legend_variables_labels) +
   labs(title = "Calcasieu Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
-       y = "Mean Concentration") +
+       y = "Total Concentration") +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1))
 ```
+Table 4. Displays a bar graph that categorizes the six major pollutants released in the Calcasieu parish for the years 2000-2018.
+
+The graph reveals a fluctuating pattern of pollutant concentrations over the years.
+Benzene, Butadiene and Others have the highest concentrations throughout the years.
+Ethylene has the smallest concentration and appears to be decreasing throughout the years.
+Formaldehyde and Vinyl have a steady concentration.
+
+Overall, the graph provides a visual representation of the prevalence of pollutant concentrations for the specified time frame and pollutants. It can help in identifying trends and patterns of pollution levels, which can inform policy decisions and environmental regulations.
+
 
 ```{r}
 # Plotting 3 Ascension subsets to visualize every pollutant by year better
@@ -513,58 +624,23 @@ total_calcasieu_subset3%>%
 
 ```
 
+Conclusion
+
+To summarize, the LDEQ emissions inventory data set offers valuable insights into the nature and extent of air pollution in Louisiana. Specifically, it provides information on the quantity and types of pollutants emitted by different sources, as well as their geographic locations and trends over time. This data can inform research, policy development, and public education efforts aimed at reducing pollution and safeguarding public health and the environment.
 
 
-```{r}
-# Calculate the mean of the column mycolumn in mydata
-mean_Butadiene <- mean(ascension2$`1,3-Butadiene`)
-
-# Generate a summary of the mean of mycolumn
-summary_mean_Butadiene<- summary(mean_Butadiene)
-
-# View the summary
-summary_mean_Butadiene
-
-```
 
 
-```{code}
-facilities_by_county2 <- facilities_by_county %>% 
-  pivot_longer(cols=2:3, 
-               names_to = "names", 
-               values_to = "count")
 
 
-ggplot(facilities_by_county2, aes(x = factor(county), 
-                                  y = count,  
-                                  fill = names, 
-                                  colour = names)) + 
-  geom_bar(stat = "identity") + 
-  labs(title = "Total number of facilities by county & pollutant facilities",
-       y = "County",
-       x = "Total") +
-  theme_bw()
 
-```
-
-In conclusion The LDEQ emissions inventory data set can tell us:
-
-1. The amount of various pollutants emitted: The data set provides information on the amounts of pollutants such as carbon monoxide, nitrogen oxides, sulfur dioxide, volatile organic compounds, and particulate matter emitted by different sources.
-
-2. The types of sources that emit pollutants: The data set provides information on the types of sources that emit pollutants, including power plants, refineries, chemical plants, and other industrial facilities, as well as transportation sources such as cars, trucks, and airplanes.
-
-3. The geographic locations of emissions: The data set provides information on the geographic locations of emissions, including emissions from specific facilities and emissions from broader geographic areas such as cities or regions.
-
-4. Trends in emissions over time: The data set can be used to track changes in emissions over time, which can help assess the effectiveness of pollution control measures and other environmental policies.
-
-By analyzing the LDEQ emissions inventory data set, researchers, policymakers, and the public can better understand the sources and impacts of pollution in Louisiana and develop strategies to reduce emissions and protect public health and the environment. 
-
-```{r}
-total_calcasieu %>%  
+#IGNORE
+```{random code}
+#total_calcasieu %>%  
   ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
   geom_bar(stat = "identity") +
-   scale_fill_manual(name = "Names of Pollutant", values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"),) +
-  labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
+   scale_fill_manual(name = "Names of Pollutant", values= graph_colors +
+  #labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
        x = "Year",
        y = "Mean Concentration") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
