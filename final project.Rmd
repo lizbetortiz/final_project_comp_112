@@ -6,7 +6,7 @@ output:
     code_folding: hide
 ---
 
-Introduction 
+#ntroduction 
 
 Cancer Alley in Louisiana is an 85-mile-long region with a concentration of petrochemical and industrial plants along the Mississippi River, contributing to the area's high incidence of cancer and other illnesses. The area's population of approximately 45,000 residents is predominantly low-income, and African Americans, and they have been advocating for the reduction of emissions from these facilities that pollute the air, water, and soil in their surrounding homes. 
 
