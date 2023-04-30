@@ -22,7 +22,7 @@ The LDEQ employs multiple methods to quantify emissions inventory in their publi
 - **Modeling:** Utilizes computer models to estimate emissions based on various inputs, such as meteorological data and land use data, that can affect emissions.
 
 
-## Data Limitations
+## Data limitations
 
 The LDEQ has identified limitations in emissions reports, which can impact the accuracy of measuring pollution from companies.
 
@@ -41,7 +41,7 @@ Additionally, other limitations our team found within this dataset are the follo
 For more detailed information about these limitations, refer to the LEDQ document ([link](https://www.deq.louisiana.gov/assets/docs/Air/EmissionsInventory/Public_Reports/LimitationswiththeEmissionsReports_03102021.pdf)).
 
 
-## Cancer Causing Chemicals
+## Cancer causing chemicals
 
 The National Institutes of Health (NIH), a division of the U.S. Department of Health and Human Services, conducts vital medical research to enhance health and extend lives. The NIH recognizes various carcinogenic pollutants, including:
 
@@ -73,7 +73,7 @@ It is important to note that the risks associated with exposure to these chemica
 
 
 
-## Project Focus: Ascension and Calcasieu Counties
+## Project focus: Ascension and Calcasieu counties
 
 According to the Environmental Integrity Project's (EIP) 2018 report, more than a third (34%) of total toxicity-weighted air emissions in the United States originated from only ten counties. Interestingly, Ascension and Calcasieu, located in Louisiana, were among those counties. As a result of this discovery, we conducted an examination of the various pollutants emitted by facilities in these two counties from the LDEQ dataset.
 
@@ -259,9 +259,9 @@ ascension_facilities <- ascension_total_facilities %>%
             join_by(REPORTING_YEAR))
 ```
 
-## Graphs & Results
+## Graphs & results
 
-#### Total number of Facilities in Ascension and Calcasiue counties
+#### Total number of facilities in Ascension and Calcasiue counties
 
 Table 1 and table 2 display a bar graph that classifies the overall count of facilities in Ascension Parish and Calcasieu counties based on their pollutant and non-pollutant status from 2000 to 2018, grouped by year. In this particular study, a facility is identified as a pollutant if it has contributed to at least one of the 15 pollutants under our study. Otherwise, any facility that did not release any of the previously mentioned pollutants is considered non-pollutant.
 
@@ -292,11 +292,12 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                                "Pollutant Facilities"))
   
 ```
+
 This graph provides a visual representation of Ascension Parish's facilities, distinguishing between those that produce our selected pollutants and those that do not. The following observations can be made from the graph:
 
-- The number of facilities increase over the years
-- Pollutant facilities also increase over the same period 
-- Non-pollutant facilities also saw a slight increase
+- The number of facilities increased over the years
+- Pollutant facilities also increased over the same period 
+- Non-pollutant facilities also saw a slight increased
 
 ```{r}
 # Table that holds the Calcasieu total number of facilities by year 
@@ -342,6 +343,7 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                     labels = c("Non-pollutant facilities", 
                                "Pollutant Facilities"))
 ```
+
 Graph 2, similar to Graph 1, presents a visual representation of Calcasieu's establishments, differentiating between those that generate pollutants and those that do not.
 
 The following observations can be made from this graph:
@@ -428,6 +430,7 @@ total_ascension %>%
                                    vjust = 0.5, 
                                    hjust = 1)) 
 ```
+
 The graph shows that pollution levels went up and down over time. It compares the amount of different types of pollution each year, but not the total amount of pollution.
 
 Here are some observations:
@@ -596,7 +599,8 @@ total_calcasieu_subset1 %>%
                     labels = legend_variables_labels) +
   labs(title = "Calcasieu Prevalence of Pollutant Concentration (2000-2006)",
        x = "Year",
-       y = "Total Concentration (10,000 pounds)") +
+       y = "Total Concentration (10,000 pounds)",
+       caption = str_wrap("Graph 8. Displays a bar graph with the different pollutants total concentration for the years 2000-2006.")) +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -613,10 +617,10 @@ total_calcasieu_subset2 %>%
   scale_fill_manual(name = "Names of Pollutant", 
                     values=graph_colors,
                     labels = legend_variables_labels) +
-  
   labs(title = "Calcasieu Prevalence of Pollutant Concentration (2007-2012)",
        x = "Year",
-       y = "Total Concentration (10,000 pounds)") +
+       y = "Total Concentration (10,000 pounds)",
+       caption = str_wrap("Graph 9. Displays a bar graph with the different pollutants total concentration for the years 2007-20012.")) +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -635,7 +639,8 @@ total_calcasieu_subset3%>%
                     labels = legend_variables_labels) +
   labs(title = "Calcasieu Prevalence of Pollutant Concentration (2013-2018)",
        x = "Year",
-       y = "Total Concentration (10,000 pounds)") +
+       y = "Total Concentration (10,000 pounds)",
+       caption = str_wrap("Graph 10. Displays a bar graph with the different pollutants total concentration for the years 2013-2018.")) +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -643,6 +648,7 @@ total_calcasieu_subset3%>%
   scale_y_continuous(limits=c(0, 22), n.breaks = 12)
 
 ```
+
 This is a summary of the previous graphs for Calcasieu county:
 
 - **Benzene** had an unstable emission trend with up and down trends between 80,000 and 120,000 pounds for the years 2000-2011. After that, the total concentration stayed just below the 75,000 pounds, which reflects a considered decrease.
@@ -656,7 +662,8 @@ This is a summary of the previous graphs for Calcasieu county:
 In general, these graphs indicate the quantity of pollution that existed in Ascension and Calcasieu counties between 2000 and 2018. They aid in comprehending patterns and trends in pollution levels, which may assist us in determining how to decrease pollution to safeguard the environment and human health. By studying the graphs, we can recognize the most prevalent pollutants and whether pollution levels escalated or declined over time. The graphs are a valuable resource for interpreting pollution and devising ways to reduce it for the benefit of our environment and communities' well-being.
 
 
-## Further Work
+## Further work
+
 While our study of the pollutants emitted in Ascension and Calcasieu counties revealed different trends among the facilities, there are still important questions that require more detailed investigation. For example, we did not explore the types of facilities (such as refineries) that are responsible for these emissions. We also need to understand why non-pollutant facilities in Calcasieu county experienced a significant reduction compared to pollutant facilities. Additionally, we only focused on a few pollutants, and it is important to study other pollutants that can be equally or even more dangerous to the environment and public health.
 
 ## Conclusion
