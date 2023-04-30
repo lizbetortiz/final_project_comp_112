@@ -1,90 +1,109 @@
 ---
-title: "final project"
-author: "Lizbet Ortiz"
+title: "What is the impact of industrial emissions on public health in Cancer Alley, Louisiana, and how are these emissions quantified?"
+author: "Lizbet Ortiz, Juan Rios, Tianqi Zhao"
 output: 
   html_document:
     code_folding: hide
 ---
 
-#ntroduction 
+Cancer Alley in Louisiana is an 85-mile-long region with a concentration of petrochemical and industrial plants along the Mississippi River, contributing to the area's high incidence of cancer and other illnesses. The area's population of approximately 45,000 residents is predominantly low-income and African Americans, and they have been advocating for the reduction of emissions from these facilities that pollute the air, water, and soil in their surrounding homes. 
 
-Cancer Alley in Louisiana is an 85-mile-long region with a concentration of petrochemical and industrial plants along the Mississippi River, contributing to the area's high incidence of cancer and other illnesses. The area's population of approximately 45,000 residents is predominantly low-income, and African Americans, and they have been advocating for the reduction of emissions from these facilities that pollute the air, water, and soil in their surrounding homes. 
-
-The Louisiana Department of Environmental Quality (LDEQ) emissions Inventory data set from 1991 to 2022 provides information about the amount and type of pollutants released by industrial facilities in Louisiana. This dataset includes facility location and emissions data in pounds or tons per year. Our team analyzed this dataset to better understand the impact of emissions from these facilities on the health and well-being of the local populace, as opposed to the economic benefits touted by these businesses.
+The Louisiana Department of Environmental Quality (LDEQ) emissions inventory dataset from 1991 to 2022 provides information about the amount and type of pollutants released by industrial facilities in Louisiana. This dataset includes facility location and emissions data in pounds or tons per year. Our team analyzed this dataset to better understand the impact of emissions from these facilities on the health and well-being of the local populace, as opposed to the economic benefits touted by these businesses.
 
 
+## How are chemical emissions quantified?
 
-How are chemical emissions quantified?
+The LDEQ employs multiple methods to quantify emissions inventory in their public datasets, including direct measurement, calculation, and modeling: 
 
-The LDEQ employs multiple methods to quantify emissions inventory in their public datasets, including direct measurement, calculation, and modeling. 
+- **Direct measurement:** Utilizes specialized instruments to measure emissions directly from industrial and power plants.
 
-Direct measurement: Utilizes specialized instruments to measure emissions directly from industrial and power plants.
+- **Calculation:** Involves estimating emissions from various sources using emission factors and activity data. For example,emission factors represent the amount of pollutants emitted per unit of activity, such as the amount of carbon dioxide released per unit of fossil fuel burned.
 
-Calculation: Involves estimating emissions from various sources using emission factors and activity data. For example,emission factors represent the amount of pollutants emitted per unit of activity, such as the amount of carbon dioxide released per unit of fossil fuel burned.
-
-Modeling: Utilizes computer models to estimate emissions based on various inputs, such as meteorological data and land use data, that can affect emissions.
+- **Modeling:** Utilizes computer models to estimate emissions based on various inputs, such as meteorological data and land use data, that can affect emissions.
 
 
-Data Limitations
+## Data Limitations
 
 The LDEQ has identified limitations in emissions reports, which can impact the accuracy of measuring pollution from companies.
 
-Outdated equipment and incomplete data may result in underestimating or missing pollutants.
-Companies may also underestimate their pollution to avoid penalties or regulations.
+- Outdated equipment and incomplete data may result in underestimating or missing pollutants.
 
-Furthermore, emissions reports only cover a limited range of pollutants, which can exclude other harmful substances. These limitations may have adverse public health and economic consequences. These limitations are particularly significant in Louisiana, which has a high concentration of industrial facilities emitting pollutants. 
+- Companies may also underestimate their pollution to avoid penalties or regulations.
 
-Additionally, limitations our team found within this dataset are
+Furthermore, emissions reports only cover a limited range of pollutants, which can exclude other harmful substances. These limitations may have adverse public health and economic consequences and are particularly significant in Louisiana, which has a high concentration of industrial facilities emitting pollutants. 
 
-It's worth noting that this data set only includes facilities with permits subject to LAC 33:III.919 and/or LAC 33:III.510. As a result, some data may be missing, which may lead to the assumption of non-contribution to a pollutant for the purpose of analysis. 
-There are also gaps in the data due to some facilities not reporting every year. 
+Additionally, other limitations our team found within this dataset are the following:
 
-For more detailed information about these limitations, refer to the LEDQ document linked above.
+- It's worth noting that this data set only includes facilities with permits subject to LAC 33:III.919 and/or LAC 33:III.510. As a result, some data may be missing, which may lead to the assumption of non-contribution to a pollutant for the purpose of analysis. 
 
+- There are also gaps in the data due to some facilities not reporting every year. 
 
-
-
-Cancer Causing Chemicals
-
-The NIH, a division of the U.S. Department of Health and Human Services, conducts vital medical research to enhance health and extend lives. The NIH recognizes various carcinogenic pollutants, including:
-
-Benzene: A highly flammable, colorless compound utilized to manufacture synthetic fibers, plastics, and other items. It's also found in tobacco smoke and gasoline. Exposure to benzene has been associated with leukemia, lymphoma, and other blood cancers.
-
-Butadiene: A colorless gas used in the production of synthetic rubber and other materials, and exposure to this chemical has been linked to an increased risk of leukemia and other blood cancers.
-
-Ethylene: A gas used in the production of plastics, rubber, and other materials, and exposure to this chemical has been linked to an increased risk of breast cancer, leukemia, and lymphoma.
-
-Formaldehyde: A colorless gas used to generate resins, textiles, and other products, also found in tobacco smoke and other sources. Leukemia and other cancers have been linked to formaldehyde exposure.
-
-Vinyl chloride: A colorless gas used to manufacture PVC plastic products like pipes, wire coatings, and flooring. Vinyl chloride exposure has been linked to liver cancer and other cancers.
+For more detailed information about these limitations, refer to the LEDQ document ([link](https://www.deq.louisiana.gov/assets/docs/Air/EmissionsInventory/Public_Reports/LimitationswiththeEmissionsReports_03102021.pdf)).
 
 
-It's important to note that the risks associated with exposure to these chemicals can vary depending on the dose, duration, and other factors. Cancer is a complex illness with numerous causes, and exposure to these substances is just one of several factors that may contribute to cancer risk.
+## Cancer Causing Chemicals
+
+The National Institutes of Health (NIH), a division of the U.S. Department of Health and Human Services, conducts vital medical research to enhance health and extend lives. The NIH recognizes various carcinogenic pollutants, including:
+
+- **Benzene:** A highly flammable, colorless compound utilized to manufacture synthetic fibers, plastics, and other items. It's also found in tobacco smoke and gasoline. Exposure to benzene has been associated with leukemia, lymphoma, and other blood cancers.
+
+- **Butadiene:** A colorless gas used in the production of synthetic rubber and other materials, and exposure to this chemical has been linked to an increased risk of leukemia and other blood cancers.
+
+- **Ethylene:** A gas used in the production of plastics, rubber, and other materials, and exposure to this chemical has been linked to an increased risk of breast cancer, leukemia, and lymphoma.
+
+- **Formaldehyde:** A colorless gas used to generate resins, textiles, and other products, also found in tobacco smoke and other sources. Leukemia and other cancers have been linked to formaldehyde exposure.
+
+- **Vinyl chloride:** A colorless gas used to manufacture PVC plastic products like pipes, wire coatings, and flooring. Vinyl chloride exposure has been linked to liver cancer and other cancers.
+
+Additionally, the National Toxicology Program (NTP), a federal interagency program responsible for evaluating the potential health hazards of chemicals and substances in the environment, has identified several substances as known or reasonably anticipated human carcinogens. These substances include the following:
+
+- Arsenic (and compounds)
+- Asbestos
+- Benzidine
+- Beryllium
+- Cadmium (and compounds)
+- Chromium VI (and compounds)
+- Nickel (and compounds)
+- Nickel (refinery dust)
+- Sulfuric acid
+- Trichloroethylene
+
+
+It is important to note that the risks associated with exposure to these chemicals can vary depending on the dose, duration, and other factors. Cancer is a complex illness with numerous causes, and exposure to these substances is just one of several factors that may contribute to cancer risk.
 
 
 
-Project Focus: Ascension and Calcasieu Counties
+## Project Focus: Ascension and Calcasieu Counties
 
-The EIP's 2018 report highlighted that only ten counties in the United States contributed over a third (34%) of total toxicity-weighted air emissions. Intriguingly, Ascension and Calcasieu, both located in Louisiana, were among these counties. 
+According to the Environmental Integrity Project's (EIP) 2018 report, more than a third (34%) of total toxicity-weighted air emissions in the United States originated from only ten counties. Interestingly, Ascension and Calcasieu, located in Louisiana, were among those counties. As a result of this discovery, we conducted an examination of the various pollutants emitted by facilities in these two counties from the LDEQ dataset.
 
-After analyzing the original dataset, we focused on the 15 chemical pollutants related to cancer, out of the initial 173. The pollutants were reported in Louisiana's dataset, and include 
-1,3-Butadiene
-Arsenic (and compounds)
-Asbestos
-Benzene
-Benzidine
-Beryllium
-Cadmium (and compounds)
-Chromium VI (and compounds)
-Ethylene oxide
-Formaldehyde
-Nickel (and compounds)
-Nickel (refinery dust)
-Sulfuric acid
-Trichloroethylene
-Vinyl chloride. 
+Following an analysis of the initial dataset, our attention was directed towards the 15 chemical pollutants known to contribute to cancer based on our research, out of the original 173:
 
-It's worth noting that the original dataset covered the period between 1991 and present. However, we focused on the 2000-2018 period to explore trends further in line with the EIP's 2018 report.
+- 1,3-Butadiene
+- Arsenic (and compounds)
+- Asbestos
+- Benzene
+- Benzidine
+- Beryllium
+- Cadmium (and compounds)
+- Chromium VI (and compounds)
+- Ethylene oxide
+- Formaldehyde
+- Nickel (and compounds)
+- Nickel (refinery dust)
+- Sulfuric acid
+- Trichloroethylene
+- Vinyl chloride. 
+
+It is worth noting that while the original dataset spanned from 1991 to the present, we chose to concentrate on the period from 2000 to 2018 to examine trends in accordance with the EIP's 2018 report. Thus, we opted to generate a fresh sub-dataset that highlights the 15 chemical pollutants that have been emitted by different facilities in Ascension and Calcasieu. Furthermore, any missing data was treated as a contribution of zero. Finally, we decided to display and group the different pollutants in 6 different groups for simplicity and visual purposes:
+
+- Benzene
+- Butadiene
+- Ethylene
+- Formaldehyde
+- Vinyl
+- Others (a combination of the remaining pollutants)
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -118,22 +137,6 @@ legend_variables_labels <- c("Others",
                              "Vinyl")
 ```
 
-
-The National Institutes of Health (NIH) is a part of the U.S. Department of Health and Human Services and is the nation's medical research agency that makes important discoveries that improve health and save lives.
-Some of the most commonly recognized pollutants that contribute to cancer, as identified by the NIH, include:
-
-1. Benzene: This is a colorless, highly flammable chemical used to produce plastics, synthetic fibers, and other products. It is also found in gasoline and tobacco smoke. Benzene exposure has been linked to leukemia, lymphoma, and other blood cancers.
-
-2. Asbestos: This is a naturally occurring mineral fiber widely used in building materials such as insulation, roofing, and flooring until its health hazards were recognized. Asbestos exposure has been linked to lung cancer, mesothelioma, and other cancers.
-
-3. Arsenic: This is a naturally occurring element found in groundwater and soil. Arsenic exposure can occur through drinking water, food, and air pollution. Arsenic exposure has been linked to skin, lung, liver, bladder, and kidney cancer.
-
-4. Vinyl chloride: This is a colorless gas used to produce polyvinyl chloride (PVC) plastic products such as pipes, wire coatings, and flooring. Vinyl chloride exposure has been linked to liver cancer and other cancers.
-
-5. Formaldehyde: This is a colorless gas used to produce resins, textiles, and other products and is also found in tobacco smoke and other sources. Formaldehyde exposure has been linked to leukemia and other cancers.
-
-
-It's important to note that many other chemical pollutants have been linked to cancer and that the same risks associated with exposure to these chemicals can vary depending on the dose, duration, and other factors. Cancer is a complex disease with many causes, and exposure to these chemicals is just one of many factors that can contribute to cancer risk. We decided to create a new dataset that shows the 15 chemical pollutants that have been to cancer in the state of Louisiana. Another important note is that the dataset raged from 1991-Present, but for simplistic purposes we decided to focus on 2000-2018.
 
 ```{r}
 # Select pollutants/variables that contribute the most to cancer
@@ -206,15 +209,7 @@ data_set <- data_set_before_2015 %>%
                         `Vinyl chloride`)) %>% 
   arrange(AI_NAME)
 ```
-The Environmental Integrity Project (EIP) is a nonpartisan, nonprofit watchdog organization that advocates for effective enforcement of environmental laws. Comprised of former EPA enforcement attorneys, public interest lawyers, analysts, investigators, and community organizers, EIP has three goals:
 
-- To illustrate through objective facts and figures how the failure to enforce or implement environmental laws increases pollution and harms public health;
-
-- To hold federal and state agencies, as well as individual corporations, accountable for failing to enforce or comply with environmental laws; and
-
-- To help local communities obtain the protections of environmental laws.
-
-According to the EIP, 
 
 
 ```{r}
@@ -252,7 +247,7 @@ ascension_total_facilities <- ascension %>%
   group_by(REPORTING_YEAR) %>% 
   summarise(TOTAL_FACILITIES = n() ) 
 
-# Table that holds the Ascension total number of facilities that contributes to at least one cancer pollutant by year
+# Table that holds the Ascension total number of facilities that contributes to at least one of the selected cancer pollutant by year (2000-2018)
 ascension_pollutant_facilities <- ascension2 %>% 
   filter(REPORTING_YEAR >= 2000 & REPORTING_YEAR <= 2018) %>% 
   group_by(REPORTING_YEAR) %>% 
@@ -264,6 +259,11 @@ ascension_facilities <- ascension_total_facilities %>%
             join_by(REPORTING_YEAR))
 ```
 
+## Graphs & Results
+
+#### Total number of Facilities in Ascension and Calcasiue counties
+
+Table 1 and table 2 display a bar graph that classifies the overall count of facilities in Ascension Parish and Calcasieu counties based on their pollutant and non-pollutant status from 2000 to 2018, grouped by year. In this particular study, a facility is identified as a pollutant if it has contributed to at least one of the 15 pollutants under our study. Otherwise, any facility that did not release any of the previously mentioned pollutants is considered non-pollutant.
 
 ```{r}
 # Plotting Ascension findings
@@ -274,11 +274,14 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
   pivot_longer(cols = 2:3,
                names_to = "type",
                values_to = "total") %>% 
-  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
+  ggplot(aes(x = factor(REPORTING_YEAR), 
+             y = total, 
+             fill = type)) +
   geom_bar(stat = "identity") +
   labs(title = "Total Number of Facilities in Ascension (2000-2018)",
        x = "Year",
-       y = "Total Facilities") + 
+       y = "Total Facilities",
+       caption = str_wrap("Graph 1. Displays a bar graph that categorizes the total number of facilities in Ascension Parish according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.")) + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -289,18 +292,11 @@ ascension_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                                "Pollutant Facilities"))
   
 ```
-Table 1. Displays a bar graph that categorizes the total number of facilities in Ascension Parish according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.
+This graph provides a visual representation of Ascension Parish's facilities, distinguishing between those that produce our selected pollutants and those that do not. The following observations can be made from the graph:
 
-This graph provides a visual representation of Ascension Parish's facilities, distinguishing between those that produce pollutants and those that do not.
-
-Non-pollutant facilities remained stable throughout the years, with a slight uptick in 2018.
-Pollutant facilities saw a significant increase over the same period. 
-
-This information is useful for identifying areas of concern regarding pollution control and prevention efforts and gaining an understanding of the facilities' spatial distribution.
-
-
-
-
+- The number of facilities increase over the years
+- Pollutant facilities also increase over the same period 
+- Non-pollutant facilities also saw a slight increase
 
 ```{r}
 # Table that holds the Calcasieu total number of facilities by year 
@@ -320,8 +316,6 @@ calcasieu_facilities <- calcasieu_total_facilities %>%
   left_join(ascension_pollutant_facilities, 
             join_by(REPORTING_YEAR))
 ```
-
-
 ```{r}
 # Plotting Calcasieu findings
 calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - POLLUTANTL_FACILITIES) %>% 
@@ -331,11 +325,14 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
   pivot_longer(cols = 2:3,
                names_to = "type",
                values_to = "total") %>% 
-  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = type)) +
+  ggplot(aes(x = factor(REPORTING_YEAR), 
+             y = total, 
+             fill = type)) +
   geom_bar(stat = "identity") +
   labs(title = "Total Number of Facilities in Calcasieu (2000-2018)",
        x = "Year",
-       y = "Total Facilities") + 
+       y = "Total Facilities",
+       caption = str_wrap("Graph 2. Displays a bar graph that categorizes the total number of facilities in Calcasieu County according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.")) + 
  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
@@ -344,26 +341,33 @@ calcasieu_facilities %>% mutate(NON_POLLUTANT_FACILITIES = TOTAL_FACILITIES - PO
                              "#E69F00"), 
                     labels = c("Non-pollutant facilities", 
                                "Pollutant Facilities"))
-  
 ```
-Table 2. Displays a bar graph that categorizes the total number of facilities in Calcasieu County according to their pollutant and non-pollutant status for the years 2000-2018 and grouped by year.
+Graph 2, similar to Graph 1, presents a visual representation of Calcasieu's establishments, differentiating between those that generate pollutants and those that do not.
 
-This graph provides a visual representation of Calcasieu's facilities, distinguishing between those that produce pollutants and those that do not.
+The following observations can be made from this graph:
 
-Non-pollutant facilities had a dramatic downfall in the year 2016 and remained slightly constant.
-Pollutant facilities saw a slight increase over the same period. 
+- There was a significant rise in the number of establishments from 2000 to 2005.
+- In 2006, the number of establishments decreased significantly, falling from over 125 in 2005 to under 50 in 2006.
+- After 2006, the total number of establishments slightly declined over time, but it can be regarded as relatively stable.
+- Compared to non-pollutant establishments, the total number of pollutant establishments displayed a stable trend from 2000 to 2006.
+- Despite the overall reduction in the number of establishments after 2006, there was a minor increase in the number of pollutant establishments, resulting in a decrease in the number of non-pollutant establishments.
 
-
-It's not clear that there was a significant drop in the number of chemical facilities in Calcasieu Parish, Louisiana after 2005. However, it's worth noting that the chemical industry has faced a number of challenges in recent years, including changes in market conditions and regulatory requirements, as well as the impacts of natural disasters such as experiencing significant impacts from Hurricane Rita, which made landfall in the area less than a month after Hurricane Katrina. 
+Expanding on our previous points, it is clear that there was a significant drop in the number of facilities in Calcasieu Parish, Louisiana after 2005. However, it's worth noting that the chemical industry has faced a number of challenges in recent years, including changes in market conditions and regulatory requirements, as well as the impacts of natural disasters such as experiencing significant impacts from Hurricane Rita, which made landfall in the area less than a month after Hurricane Katrina in 2005. This natural disaster can be considered one of the main reasons of this considerable drop.
 
 Rita was a Category 3 hurricane that caused widespread damage and power outages in southwest Louisiana, including Calcasieu Parish. The storm surge and high winds caused significant damage to buildings and infrastructure, and many residents were displaced from their homes for weeks or months.
 
 For example, the Citgo refinery in Lake Charles, which is located in Calcasieu Parish, had to shut down for several weeks after the storm due to flooding and power outages. However, many other companies in the area were able to quickly resume operations and continue producing essential products such as gasoline and other fuels to support recovery efforts in the region.
 
-One potential factor that may have contributed to a decline in the number of facilities in the area is increasing competition from other regions, particularly those with access to cheaper feedstocks or lower operating costs. For example, the shale gas boom in Texas and other parts of the country has led to significant investments in chemical production facilities in those areas.
+Another potential factor that may have contributed to a decline in the number of facilities in the area is increasing competition from other regions, particularly those with access to cheaper feed stocks or lower operating costs. For example, the shale gas boom in Texas and other parts of the country has led to significant investments in chemical production facilities in those areas.
 
-Overall, it's likely that a combination of factors has contributed to changes in the number and composition of chemical facilities in Calcasieu Parish and other industrial regions over time.
+It is likely that a combination of factors has contributed to changes in the number and composition of chemical facilities in Calcasieu Parish and other industrial regions over time.
 
+Overall, Ascension and Calcasieu counties graphs helps us understand the ratio over time of facilities that contribute to the selected pollutants.This information is useful for identifying areas of concern regarding pollution control and prevention efforts and gaining an understanding of the facilities' spatial distribution.
+
+
+#### Analyzing individual pollutants trends
+
+The following graphs help us understand how pollution changed over time in these two counties of Louisiana.
 
 ```{r}
 #calculated the amount for each pollutant in ascension county from 2000 to 2018
@@ -418,20 +422,24 @@ total_ascension %>%
                      labels = legend_variables_labels) +
   labs(title = "Ascension Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
-       y = "Total Concentration") +
+       y = "Ratio Concentration",
+       caption = str_wrap("Graph 3. Displays a histogram that categorizes the six major pollutants released in the Ascension parish for the years 2000-2018.")) +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) 
 ```
-Table 3. Displays a bar graph that categorizes the six major pollutants released in the Ascension parish for the years 2000-2018.
+The graph shows that pollution levels went up and down over time. It compares the amount of different types of pollution each year, but not the total amount of pollution.
 
-The graph reveals a fluctuating pattern of pollutant concentrations over the years.
-Benzene and Ethylene oxide with some pollutants showing a decreasing trend. 
-Formaldehyde, 1,3-Butadiene, Vinyl chloride, and Others show an increasing trend 
+Here are some observations:
 
-Furthermore, the "others" category, a combination of various pollutants, exhibits consistently high concentration levels throughout the years.
-In conclusion, the graph emphasizes the ongoing need for monitoring and managing pollutant concentrations in the Ascension parish to ensure that they remain within safe limits.
+- **Vinyl** initially showed an increasing trend, but after 2010, it became less dominant.
+- **Benzene** was a prevalent pollutant in the early years but decreased in ratio over time.
+- **Formaldehyde's** ratio displayed a rising trend.
+- **Butadiene** appeared to have a steady trend, but its emissions seemed to have ceased after 2006.
+- **Ethylene's** ratio trended downwards but increased after 2010.
+- **Others** exhibited a decreasing trend in the first half of the timeframe, but began increasing after 2009. 
 
+The subsequent graphs demonstrate the total concentration of each pollutant emitted per year.
 
 ```{r}
 # Plotting 3 Ascension subsets to visualize every pollutant by year better
@@ -439,35 +447,42 @@ In conclusion, the graph emphasizes the ongoing need for monitoring and managing
 # Subset 1
 total_ascension_subset1 %>%  
   ggplot() +
-  geom_col(mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), 
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total, 
+                         fill = pollutant), 
            position = position_dodge(0.9)) +
   scale_fill_manual(name = "Names of Pollutant", 
                     values=graph_colors,
                     labels = legend_variables_labels) +
   labs(title = "Ascension Prevalence of Pollutant Concentration (2000-2006)",
        x = "Year",
-       y = "Total Concentration (pounds)") +
+       y = "Total Concentration (pounds)",
+       caption = "Graph 4. Displays a bar graph with the different pollutants total concentration for the years 2000-2006.") +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(limits=c(0, 200000), n.breaks = 12)
 
 # Subset 2
 total_ascension_subset2 %>%  
   ggplot() +
-  geom_col(mapping = aes(x = REPORTING_YEAR, y = total, fill = pollutant), 
+  geom_col(mapping = aes(x = REPORTING_YEAR, 
+                         y = total, 
+                         fill = pollutant), 
            position = position_dodge(0.9)) +
   scale_fill_manual(name = "Names of Pollutant", 
                     values=graph_colors,
                     labels = legend_variables_labels) +
-  
   labs(title = "Ascension Prevalence of Pollutant Concentration (2007-2012)",
        x = "Year",
-       y = "Total Concentration (pounds)") +
+       y = "Total Concentration (pounds)",
+       caption = "Graph 5. Displays a bar graph with the different pollutants total concentration for the years 2007-2012.") +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(limits=c(0, 200000), n.breaks = 12)
 
 # Subset 3
 total_ascension_subset3 %>%  
@@ -479,20 +494,23 @@ total_ascension_subset3 %>%
   scale_fill_manual(name = "Names of Pollutant", 
                     values=graph_colors,
                     labels = legend_variables_labels) +
-  
   labs(title = "Ascension Prevalence of Pollutant Concentration (2013-2018)",
        x = "Year",
-       y = "Total Concentration (pounds)") +
+       y = "Total Concentration (pounds)",
+       caption = "Graph 6. Displays a bar graph with the different pollutants total concentration for the years 2013-2018.") +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
-
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(limits=c(0, 200000), n.breaks = 12)
 ```
 
-
-
-
+- **Benzene** showed a significant decrease trend in the early 2000s and has since maintained emissions below 40,000 pounds per year.
+- **Butadiene** remained stable at less than 10,000 pounds from 2000 to 2006, and there were no emissions thereafter.
+- **Ethylene** had a decreasing trend until 2007 and then showed some instability with fluctuations in the following years, but it remained below 30,000 pounds, except in 2013.
+- **Formaldehyde** also exhibited an unstable trend with variations between 20,000-40,000 pounds, with a significant decrease in the first three years of this period.
+- **Vinyl** started with a decreasing trend, but after 2005, it showed an increasing trend until 2010, after which it had a decreasing trend.
+- **Others** had a decreasing trend for the first six years, followed by a slight increase.
 
 ```{r}
 #calculated the amount of each pollutant in Calcasieu county from 2000 to 2018
@@ -533,9 +551,8 @@ total_calcasieu_subset2 <- filter(total_calcasieu, `group` == 2)
 total_calcasieu_subset3 <- filter(total_calcasieu, `group` == 3)
 ```
 
-
-
 ```{r}
+# Plotting results
 total_calcasieu %>%  
   ggplot() +
   geom_bar(stat = "identity", 
@@ -548,20 +565,21 @@ total_calcasieu %>%
                      labels = legend_variables_labels) +
   labs(title = "Calcasieu Prevalence of Pollutant Concentration (2000-2018)",
        x = "Year",
-       y = "Total Concentration") +
+       y = "Ratio Concentration",
+       caption = str_wrap("Graph 7. Displays a bar graph that categorizes the six major pollutants released in the Calcasieu parish for the years 2000-2018.")) +
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1))
 ```
-Table 4. Displays a bar graph that categorizes the six major pollutants released in the Calcasieu parish for the years 2000-2018.
 
-The graph reveals a fluctuating pattern of pollutant concentrations over the years.
-Benzene, Butadiene and Others have the highest concentrations throughout the years.
-Ethylene has the smallest concentration and appears to be decreasing throughout the years.
-Formaldehyde and Vinyl have a steady concentration.
+The graph illustrates a varying pattern in the ratio of pollutant concentrations in Calcasieu county over the years.
 
-Overall, the graph provides a visual representation of the prevalence of pollutant concentrations for the specified time frame and pollutants. It can help in identifying trends and patterns of pollution levels, which can inform policy decisions and environmental regulations.
-
+- For most of the years, **Benzene** had the highest ratio compared to the other pollutants.
+- **Butadiene** exhibited an increasing trend with a higher peak in 2015 and 2016.
+- **Ethylene** showed an unstable trend, but after 2013, its ratio saw a considerable decrease.
+- **Formaldehyde** had a stable trend for the first seven years, but after 2007, its ratio concentration decreased and then increased again around 2016 and the subsequent years.
+- Similarly, **Vinyl** had an unstable trend, with its peak occurring between 2010-2012.
+- **Others** also displayed an unstable trend throughout the years, with its highest peak being in 2012, consistent with the previous observations.
 
 ```{r}
 # Plotting 3 Ascension subsets to visualize every pollutant by year better
@@ -582,7 +600,8 @@ total_calcasieu_subset1 %>%
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(limits=c(0, 22), n.breaks = 12)
 
 # Subset 2
 total_calcasieu_subset2 %>%  
@@ -601,8 +620,8 @@ total_calcasieu_subset2 %>%
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
-
+  scale_x_continuous(n.breaks = 10)+
+  scale_y_continuous(limits=c(0, 22), n.breaks = 12)
 
 # Substet 3
 total_calcasieu_subset3%>%  
@@ -620,31 +639,30 @@ total_calcasieu_subset3%>%
   theme(axis.text.x = element_text(angle = 90, 
                                    vjust = 0.5, 
                                    hjust = 1)) +
-  scale_x_continuous(n.breaks = 10)
+  scale_x_continuous(n.breaks = 10) +
+  scale_y_continuous(limits=c(0, 22), n.breaks = 12)
 
 ```
+This is a summary of the previous graphs for Calcasieu county:
 
-Conclusion
+- **Benzene** had an unstable emission trend with up and down trends between 80,000 and 120,000 pounds for the years 2000-2011. After that, the total concentration stayed just below the 75,000 pounds, which reflects a considered decrease.
+- **Butadiene** seems to increase over year, with a significant total concentration of below 20,000 pounds in 2000 to above 130,000 pounds in 2015. After that year, it has a considerable decrease, getting to around 30,000 pounds in 2018.
+- **Ethylene** always remained below the 10,00pounds every year,but after the year 2013, it dropped to just below 5,000 pounds.
+- **Formaldehyde** displays an unstable trend but always being below the 20,000 pounds. Its lowest emission was in the year 2010 with probably around 2,000 pounds.
+- **Vinyl** also has an unstable trend, reaching its highest emission in 2012 with around 35,000 pounds.
+- **Others** has a decrease trend in general. Even though it was increasing during the first five year, it then decrease its total concentration over time to be below 45,000 pounds.
+
+
+In general, these graphs indicate the quantity of pollution that existed in Ascension and Calcasieu counties between 2000 and 2018. They aid in comprehending patterns and trends in pollution levels, which may assist us in determining how to decrease pollution to safeguard the environment and human health. By studying the graphs, we can recognize the most prevalent pollutants and whether pollution levels escalated or declined over time. The graphs are a valuable resource for interpreting pollution and devising ways to reduce it for the benefit of our environment and communities' well-being.
+
+
+## Further Work
+While our study of the pollutants emitted in Ascension and Calcasieu counties revealed different trends among the facilities, there are still important questions that require more detailed investigation. For example, we did not explore the types of facilities (such as refineries) that are responsible for these emissions. We also need to understand why non-pollutant facilities in Calcasieu county experienced a significant reduction compared to pollutant facilities. Additionally, we only focused on a few pollutants, and it is important to study other pollutants that can be equally or even more dangerous to the environment and public health.
+
+## Conclusion
 
 To summarize, the LDEQ emissions inventory data set offers valuable insights into the nature and extent of air pollution in Louisiana. Specifically, it provides information on the quantity and types of pollutants emitted by different sources, as well as their geographic locations and trends over time. This data can inform research, policy development, and public education efforts aimed at reducing pollution and safeguarding public health and the environment.
 
 
-
-
-
-
-
-#IGNORE
-```{random code}
-#total_calcasieu %>%  
-  ggplot(aes(x = factor(REPORTING_YEAR), y = total, fill = pollutant)) +
-  geom_bar(stat = "identity") +
-   scale_fill_manual(name = "Names of Pollutant", values= graph_colors +
-  #labs(title = "Prevalence of Mean Pollutant Concentration (2000-2018)",
-       x = "Year",
-       y = "Mean Concentration") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-```
 
 
